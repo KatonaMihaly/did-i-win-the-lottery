@@ -1,0 +1,1 @@
+The dataset used is downloaded at 20-10-2025 from https://bet.szerencsejatek.hu/
