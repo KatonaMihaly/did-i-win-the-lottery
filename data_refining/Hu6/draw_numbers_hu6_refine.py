@@ -31,7 +31,7 @@ def to_sql(df):
         date = row['draw_date']
         lottery = row['lottery_id']
         numbers = [row['n1'], row['n2'], row['n3'], row['n4'], row['n5'], row['n6']]
-        sql = f"('{date}', '{lottery}', ARRAY[{','.join(map(str, numbers))}]);"
+        sql = f"('{date}', '{lottery}', ARRAY[{','.join(map(str, numbers))}]),"
         lines.append(sql)
 
     with open('../../SQL_commands/draw_numbers_hu6_SQL.txt', 'w') as f:
