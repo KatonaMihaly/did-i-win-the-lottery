@@ -15,6 +15,9 @@ class StreamlitFrontend:
     TEXT = {
         "en": {
             "welcome_title": "Choose your language!",
+            "welcome_activity": "🎯 Check out how many times you would have won the lottery!",
+            "welcome_goals": "🍀 Submit your lucky numbers and check how many times you would have won the lottery if you"
+                             " had played every game since the beginning of the lottery!",
             "disclaimer_title": "⚠️ User agreement",
             "disclaimer_file": "disclaimer_en.txt",
             "accept_button": "✅ I Accept",
@@ -25,16 +28,23 @@ class StreamlitFrontend:
             "picker_title_hu7": "🎲 Pick your 7 lottery numbers",
             "submit_button": "Submit",
             "results_header": "🎯 Lottery Results",
+            "results_lucky": "🍀 Your lucky numbers:",
             "date_col": "🗓️ Draw Date",
+            "draw_numbers": "🎰 Numbers",
             "matches_col": "⭐ Matches",
-            "matches_mech_col": "⭐ Matches (mechanical)",
-            "matches_manual_col": "⭐ Matches (manual)",
+            "numbers_mech_col": "🎰 Mechanical draw",
+            "matches_mech_col": "⭐ Matches",
+            "numbers_manual_col": "🎰 Manual draw",
+            "matches_manual_col": "⭐ Matches",
             "success_hu5_hu6": "🎉 You won {wins} times out of {length} draws since the start of the lottery! 🎉",
             "success_hu7": "🎉 You won {wins} times out of {length} draws since the start of the lottery! 🎉",
-            "last_update": "Last database update: 31/10/2025"
+            "last_update": "🔄 Last database update: 31/10/2025"
         },
         "hu": {
             "welcome_title": "Válaszd ki a nyelvet!",
+            "welcome_activity": "🎯 Tudd meg, hányszor nyertél volna a lottón!",
+            "welcome_goals": "🍀 Add meg a nyerőszámaid, és tudd meg, hányszor nyertél volna a lottón, ha a lottó"
+                             " kezdete óta minden húzáson részt vettél volna!",
             "disclaimer_title": "⚠️ Felhasználási feltételek",
             "disclaimer_file": "disclaimer_hu.txt",
             "accept_button": "✅ Elfogadom",
@@ -45,13 +55,17 @@ class StreamlitFrontend:
             "picker_title_hu7": "🎲 Add meg a 7 nyerőszámod!",
             "submit_button": "Lássuk!",
             "results_header": "🎯 Találatok",
+            "results_lucky": "🍀 Nyerőszámaid:",
             "date_col": "🗓️ Húzás dátuma",
+            "draw_numbers": "🎰 Kihúzott számok",
             "matches_col": "⭐ Találatok száma",
-            "matches_mech_col": "⭐ Találatok száma (gépi)",
-            "matches_manual_col": "⭐ Találatok száma (kézi)",
+            "numbers_mech_col": "🎰 Gépi húzás",
+            "matches_mech_col": "⭐ Találatok száma",
+            "numbers_manual_col": "🎰 Kézi húzás",
+            "matches_manual_col": "⭐ Találatok száma",
             "success_hu5_hu6": "🎉 Az eddigi {length} húzásból {wins} esetben volt találatod! 🎉",
             "success_hu7": "🎉 Az eddigi {length} húzásból {wins} esetben volt találatod! 🎉",
-            "last_update": "Adatbázis utolsó frissítése: 31/10/2025"
+            "last_update": "🔄 Adatbázis utolsó frissítése: 31/10/2025"
         }
     }
 
@@ -92,24 +106,39 @@ class StreamlitFrontend:
 
     def _welcome_page(self):
         """Streamlit Welcome Page for language selection."""
-        st.set_page_config(page_title='Would I win the lottery?', page_icon="🎲", layout="centered")
-        st.title(self.TEXT["en"]["welcome_title"])
+        st.set_page_config(page_title='Would I win the lottery?', page_icon="🎲", layout="wide")
+
+        st.title(self.TEXT["hu"]["welcome_activity"])
+        st.title(self.TEXT["en"]["welcome_activity"])
         st.divider()
 
         col1, col2 = st.columns(2)
         with col1:
-            if st.button("English", use_container_width=True, type="secondary"):
-                st.session_state["language"] = "en"
-                st.rerun()
+            st.title(self.TEXT["hu"]["welcome_title"])
         with col2:
+            st.title(self.TEXT["en"]["welcome_title"])
+
+        col1, col2 = st.columns(2)
+        with col1:
             if st.button("Magyar", use_container_width=True, type="secondary"):
                 st.session_state["language"] = "hu"
                 st.rerun()
+        with col2:
+            if st.button("English", use_container_width=True, type="secondary"):
+                st.session_state["language"] = "en"
+                st.rerun()
+
+        col1, col2 = st.columns(2)
+        with col1:
+            st.title(self.TEXT["hu"]["welcome_goals"])
+        with col2:
+            st.title(self.TEXT["en"]["welcome_goals"])
 
     def _disclaimer_page(self, txt):
         """
         Display disclaimer that must be accepted.
         """
+        st.set_page_config(page_title='Would I win the lottery?', page_icon="🎲", layout="wide")
         st.title(txt["disclaimer_title"])
 
         # Sanity check: Try to read the disclaimer file.
@@ -132,8 +161,8 @@ class StreamlitFrontend:
         """
         Display the main lottery selection buttons.
         """
+        st.set_page_config(page_title='Would I win the lottery?', page_icon="🎲", layout="centered")
         st.title(txt["selector_title"])
-        st.divider()
 
         col1, col2, col3 = st.columns(3)
 
@@ -237,19 +266,55 @@ class StreamlitFrontend:
                 st.button(txt["back_button"], on_click=self._clear_session_keys, args=(['get_winning_numbers'],))
                 return
 
+        st.set_page_config(page_title='Would I win the lottery?', page_icon="🎲", layout="wide")
         st.header(txt["results_header"])
         st.header(txt["last_update"])
+        st.header(txt["results_lucky"]+f" {', '.join([str(s) for s in _user_input])}")
+
 
         # --- Display Results (Dynamic) ---
         if _lottery_id == "hu7":
-            # 3-column layout for hu7
+            # 5-column layout for hu7
+            col1, col2, col3, col4, col5 = st.columns(5)
+            with col1:
+                st.subheader(txt["date_col"])
+            with col2:
+                st.subheader(txt["numbers_mech_col"])
+            with col3:
+                st.subheader(txt["matches_mech_col"])
+            with col4:
+                st.subheader(txt["numbers_manual_col"])
+            with col5:
+                st.subheader(txt["matches_manual_col"])
+
+            st.divider()
+
+            for r in results:
+                col1, col2, col3, col4, col5 = st.columns(5)
+                with col1:
+                    st.write(r[0])  # Date
+                with col2:
+                    st.write(', '.join([str(s) for s in r[1]]))  # Numbers A
+                with col3:
+                    st.write(r[2])  # Match A
+                with col4:
+                    st.write(', '.join([str(s) for s in r[3]]))  # Numbers A
+                with col5:
+                    st.write(r[4])  # Match B
+
+            # Complex win calculation for hu7
+            wins = sum([2 if (r[2] > 0 and r[4] > 0) else 1 if (r[2] > 0 or r[4] > 0) else 0 for r in results])
+            st.success(txt["success_hu7"].format(wins=wins, length=length))
+
+        elif _lottery_id == "hu5" or _lottery_id == "hu6":
+            # 3-column layout for hu5/hu6
             col1, col2, col3 = st.columns(3)
             with col1:
                 st.subheader(txt["date_col"])
             with col2:
-                st.subheader(txt["matches_mech_col"])
+                st.subheader(txt["draw_numbers"])
             with col3:
-                st.subheader(txt["matches_manual_col"])
+                st.subheader(txt["matches_col"])
 
             st.divider()
 
@@ -258,30 +323,9 @@ class StreamlitFrontend:
                 with col1:
                     st.write(r[0])  # Date
                 with col2:
-                    st.write(r[1])  # Match A
+                    st.write(', '.join([str(s) for s in r[1]])) # Numbers
                 with col3:
-                    st.write(r[2])  # Match B
-
-            # Complex win calculation for hu7
-            wins = sum([2 if (r[1] > 0 and r[2] > 0) else 1 if (r[1] > 0 or r[2] > 0) else 0 for r in results])
-            st.success(txt["success_hu7"].format(wins=wins, length=length))
-
-        elif _lottery_id == "hu5" or _lottery_id == "hu6":
-            # 2-column layout for hu5/hu6
-            col1, col2 = st.columns(2)  # Use 2:1 ratio for better spacing
-            with col1:
-                st.subheader(txt["date_col"])
-            with col2:
-                st.subheader(txt["matches_col"])
-
-            st.divider()
-
-            for r in results:
-                col1, col2 = st.columns(2)
-                with col1:
-                    st.write(r[0])  # Date
-                with col2:
-                    st.write(r[1])  # Match Count
+                    st.write(r[2])  # Match Count
 
             # Simple win calculation
             wins = len(results)

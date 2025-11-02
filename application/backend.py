@@ -159,12 +159,14 @@ class WinningNumbers:
             self.query_matches = """
                         SELECT
                             sub_a.draw_date,
+                            sub_a.numbers,
                             sub_a.match_count AS match_count_a,
+                            sub_b.numbers,
                             sub_b.match_count AS match_count_b
                         FROM
                             (
                                 SELECT
-                                    draw_date,
+                                    draw_date, numbers,
                                     CARDINALITY(ARRAY(
                                         SELECT UNNEST(numbers)
                                         INTERSECT
@@ -177,7 +179,7 @@ class WinningNumbers:
                         INNER JOIN
                             (
                                 SELECT
-                                    draw_date,
+                                    draw_date, numbers,
                                     CARDINALITY(ARRAY(
                                         SELECT UNNEST(numbers)
                                         INTERSECT
@@ -207,14 +209,14 @@ class WinningNumbers:
             )
 
             # --- Format results for hu7 (Date, Match A, Match B) ---
-            formatted_results = [(row[0].strftime("%Y-%m-%d"), row[1], row[2]) for row in raw_results]
+            formatted_results = [(row[0].strftime("%Y-%m-%d"), row[1], row[2], row[3], row[4]) for row in raw_results]
 
         # --- Logic for 'hu5' or 'hu6' (which have one set of numbers) ---
         elif self._lottery_id == 'hu5' or self._lottery_id == 'hu6':
             # This query is simpler: it just finds matches for one lottery type.
             self.query_matches = """
             SELECT * FROM (
-                SELECT draw_date,
+                SELECT draw_date, numbers,
                        CARDINALITY(ARRAY(
                            SELECT UNNEST(numbers)
                            INTERSECT
@@ -239,7 +241,7 @@ class WinningNumbers:
             )
 
             # --- Format results for hu5/hu6 (Date, Match Count) ---
-            formatted_results = [(row[0].strftime("%Y-%m-%d"), row[1]) for row in raw_results]
+            formatted_results = [(row[0].strftime("%Y-%m-%d"), row[1], row[2]) for row in raw_results]
 
         # Return the final formatted results and the total draw count
         return formatted_results, total_draws
