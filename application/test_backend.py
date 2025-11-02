@@ -127,7 +127,7 @@ class TestDatabaseInteraction(unittest.TestCase):
     def test_check_lottery_numbers_hu5_success(self, mock_run_db_queries):
         """Test the hu5 logic with mocked db results."""
         # 1. Define mock data
-        mock_raw_results = [(self.mock_date, 2)]
+        mock_raw_results = [(self.mock_date, [1, 2, 6, 7, 8], 2)]
         mock_total_draws = 50
         mock_run_db_queries.return_value = (mock_raw_results, mock_total_draws)
 
@@ -138,13 +138,18 @@ class TestDatabaseInteraction(unittest.TestCase):
         results, total_draws = wn.check_lottery_numbers()
 
         # 3. Assert the results are correctly formatted
-        expected_results = [("2023-01-01", 2)]
+        expected_results = [("2023-01-01", [1, 2, 6, 7, 8], 2)]
         self.assertEqual(results, expected_results)
         self.assertEqual(total_draws, mock_total_draws)
 
         # 4. Assert the db helper was called with the correct parameters
-        expected_match_params = (valid_nums, 'hu5')
-        expected_total_params = ('hu5',)
+
+        # MODIFIED: Assert match_params uses the dictionary format
+        expected_match_params = {"number": valid_nums, "id": 'hu5'}
+
+        # MODIFIED: Assert total_params uses the dictionary format
+        expected_total_params = {"id": 'hu5'}
+
         mock_run_db_queries.assert_called_once_with(
             wn.query_matches, expected_match_params, wn.query_total, expected_total_params
         )
@@ -153,7 +158,7 @@ class TestDatabaseInteraction(unittest.TestCase):
     def test_check_lottery_numbers_hu6_success(self, mock_run_db_queries):
         """Test the hu6 logic with mocked db results."""
         # 1. Define mock data
-        mock_raw_results = [(self.mock_date, 2)]
+        mock_raw_results = [(self.mock_date, [1, 2, 7, 8, 9, 10], 2)]
         mock_total_draws = 50
         mock_run_db_queries.return_value = (mock_raw_results, mock_total_draws)
 
@@ -164,13 +169,16 @@ class TestDatabaseInteraction(unittest.TestCase):
         results, total_draws = wn.check_lottery_numbers()
 
         # 3. Assert the results are correctly formatted
-        expected_results = [("2023-01-01", 2)]
+        # Expected results must match the output format: (date_str, numbers_list, match_count)
+        expected_results = [("2023-01-01", [1, 2, 7, 8, 9, 10], 2)]
         self.assertEqual(results, expected_results)
         self.assertEqual(total_draws, mock_total_draws)
 
         # 4. Assert the db helper was called with the correct parameters
-        expected_match_params = (valid_nums, 'hu6')
-        expected_total_params = ('hu6',)
+        # MODIFIED: Assert expected parameters are dictionaries
+        expected_match_params = {"number": valid_nums, "id": 'hu6'}
+        expected_total_params = {"id": 'hu6'}
+
         mock_run_db_queries.assert_called_once_with(
             wn.query_matches, expected_match_params, wn.query_total, expected_total_params
         )
@@ -179,7 +187,7 @@ class TestDatabaseInteraction(unittest.TestCase):
     def test_check_lottery_numbers_hu7_success(self, mock_run_db_queries):
         """Test the hu7 logic with mocked db results."""
         # 1. Define mock data
-        mock_raw_results = [(self.mock_date, 2, 2)]
+        mock_raw_results = [(self.mock_date, [1, 2, 8, 9, 10, 11, 12], 2, [1, 2, 10, 11, 12, 13, 14], 3)]
         mock_total_draws = 50
         mock_run_db_queries.return_value = (mock_raw_results, mock_total_draws)
 
@@ -190,13 +198,21 @@ class TestDatabaseInteraction(unittest.TestCase):
         results, total_draws = wn.check_lottery_numbers()
 
         # 3. Assert the results are correctly formatted
-        expected_results = [("2023-01-01", 2, 2)]
+        # Expected results must match the output format: (date_str, numbers_a, match_a, numbers_b, match_b)
+        expected_results = [("2023-01-01", [1, 2, 8, 9, 10, 11, 12], 2, [1, 2, 10, 11, 12, 13, 14], 3)]
         self.assertEqual(results, expected_results)
         self.assertEqual(total_draws, mock_total_draws)
 
         # 4. Assert the db helper was called with the correct parameters
-        expected_match_params = (valid_nums, 'hu7a', valid_nums, 'hu7b')
-        expected_total_params = ('hu7a',)
+        # MODIFIED: Assert expected parameters are dictionaries
+        expected_match_params = {
+            "numbers_a": valid_nums,
+            "id_a": 'hu7a',
+            "numbers_b": valid_nums,
+            "id_b": 'hu7b'
+        }
+        expected_total_params = {"id": 'hu7a'}
+
         mock_run_db_queries.assert_called_once_with(
             wn.query_matches, expected_match_params, wn.query_total, expected_total_params
         )

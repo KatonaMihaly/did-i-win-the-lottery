@@ -1,11 +1,6 @@
 # --- Import necessary libraries ---
-import psycopg2  # PostgreSQL database adapter
-from dotenv import load_dotenv  # To load environment variables from a .env file
 import os  # To access environment variables
-
-# Load environmental variables from .env file into the script's environment
-load_dotenv()
-
+import streamlit as st
 
 class WinningNumbers:
     """A class to calculate winning numbers"""
@@ -15,12 +10,8 @@ class WinningNumbers:
         self._lottery_id = _lottery_id
         self._input_numbers = _input_numbers
 
-        # Load database connection details from environment variables
-        self._DB_NAME = os.getenv("DB_NAME")
-        self._DB_USER = os.getenv("DB_USER")
-        self._DB_PASSWORD = os.getenv("DB_PASSWORD")
-        self._DB_HOST = os.getenv("DB_HOST")
-        self._DB_PORT = os.getenv("DB_PORT")
+        # All DB variables are now handled by st.connection
+        # and defined in .streamlit/secrets.toml file.
 
         # Placeholders to store the SQL queries.
         self.query_matches = ""
@@ -101,34 +92,32 @@ class WinningNumbers:
         return numbers_list
 
     def _run_db_queries(self, query_matches, match_params, query_total, total_params):
-        """Helper method to connect to the DB and execute queries."""
+        """Helper method to connect to the DB and execute queries using st.connection."""
         try:
-            with psycopg2.connect(
-                    dbname=self._DB_NAME,
-                    user=self._DB_USER,
-                    password=self._DB_PASSWORD,
-                    host=self._DB_HOST,
-                    port=self._DB_PORT
-            ) as conn:
-                with conn.cursor() as cur:
-                    # First query: find all matching draws
-                    cur.execute(query_matches, match_params)
-                    results = cur.fetchall()  # Get all matching rows
+            # 1. Initialize the connection.
+            # This uses secrets.toml by default.
+            conn = st.connection("postgresql", type="sql")
 
-                    # Second query: find the total number of draws for this lottery
-                    cur.execute(query_total, total_params)
-                    total_draws = cur.fetchone()[0]  # Get the count
+            # 2. First query: find all matching draws
+            # conn.query() returns a Pandas DataFrame.
+            # Pass parameters using the 'params' argument.
+            df_matches = conn.query(query_matches, params=match_params, ttl="0m")
 
-            # Return the raw results from the database
+            # 3. Second query: find the total number of draws
+            df_total = conn.query(query_total, params=total_params, ttl="0m")
+
+            # Convert the matches DataFrame to a list of tuples,
+            results = list(df_matches.itertuples(index=False, name=None))
+
+            # Extract the single count value from the total_draws DataFrame
+            total_draws = int(df_total.iloc[0, 0])
+
+            # Return the data in the format your other methods expect
             return results, total_draws
 
-        except (psycopg2.OperationalError, psycopg2.DatabaseError) as e:
-            # Handle database-specific errors (e.g., connection failed)
-            print(f"Database error: {e}")
-            return [], 0  # Return empty results so the app doesn't crash
         except Exception as e:
-            # Handle any other unexpected errors
-            print(f"An unexpected error occurred: {e}")
+            # Handle any query or connection errors
+            print(f"Database query error: {e}")
             return [], 0
 
     def check_lottery_numbers(self):
@@ -153,9 +142,7 @@ class WinningNumbers:
 
         # --- Logic for 'hu7' (which has two sets of numbers) ---
         if self._lottery_id == 'hu7':
-            # This query joins the draw table on itself to check for matches
-            # against two different sets of numbers (machine 'a' and manual 'b')
-            # using the same user-provided number list.
+            # MODIFIED: Use the :name style for ALL parameters
             self.query_matches = """
                         SELECT
                             sub_a.draw_date,
@@ -170,10 +157,10 @@ class WinningNumbers:
                                     CARDINALITY(ARRAY(
                                         SELECT UNNEST(numbers)
                                         INTERSECT
-                                        SELECT UNNEST(%s::int[]) -- This is numbers_set_a
+                                        SELECT UNNEST(:numbers_a) -- This is numbers_set_a
                                     )) AS match_count
                                 FROM draw
-                                WHERE lottery_id = %s -- This is lottery_id 'hu7a'
+                                WHERE lottery_id = :id_a -- This is lottery_id 'hu7a'
                             ) AS sub_a
 
                         INNER JOIN
@@ -183,10 +170,10 @@ class WinningNumbers:
                                     CARDINALITY(ARRAY(
                                         SELECT UNNEST(numbers)
                                         INTERSECT
-                                        SELECT UNNEST(%s::int[]) -- This is numbers_set_b
+                                        SELECT UNNEST(:numbers_b) -- This is numbers_set_b
                                     )) AS match_count
                                 FROM draw
-                                WHERE lottery_id = %s -- This is lottery_id 'hu7b'
+                                WHERE lottery_id = :id_b -- This is lottery_id 'hu7b'
                             ) AS sub_b
                         ON
                             sub_a.draw_date = sub_b.draw_date
@@ -196,12 +183,17 @@ class WinningNumbers:
                         ORDER BY
                             sub_a.draw_date DESC;
                             """
-            # Query to get the total number of draws (e.g., for 'hu7a')
-            self.query_total = "SELECT COUNT(*) FROM draw WHERE lottery_id = %s;"
+            # MODIFIED: Use the :name style
+            self.query_total = "SELECT COUNT(*) FROM draw WHERE lottery_id = :id;"
 
-            # Define parameters for the queries
-            match_params = (numbers, 'hu7a', numbers, 'hu7b')
-            total_params = ('hu7a',)  # Total draws for one type is sufficient
+            # MODIFIED: Ensure the dictionary is complete
+            match_params = {
+                "numbers_a": numbers,
+                "id_a": 'hu7a',
+                "numbers_b": numbers,
+                "id_b": 'hu7b'
+            }
+            total_params = {"id": 'hu7a'}
 
             # Get raw data from DB using the helper method
             raw_results, total_draws = self._run_db_queries(
@@ -209,31 +201,33 @@ class WinningNumbers:
             )
 
             # --- Format results for hu7 (Date, Match A, Match B) ---
-            formatted_results = [(row[0].strftime("%Y-%m-%d"), row[1], row[2], row[3], row[4]) for row in raw_results]
+            formatted_results = [(row[0].strftime("%Y-%m-%d"), row[1], row[2], row[3], row[4]) for row in
+                                 raw_results]
 
         # --- Logic for 'hu5' or 'hu6' (which have one set of numbers) ---
         elif self._lottery_id == 'hu5' or self._lottery_id == 'hu6':
-            # This query is simpler: it just finds matches for one lottery type.
+
+            # MODIFIED: Use the :name style for ALL parameters
             self.query_matches = """
             SELECT * FROM (
                 SELECT draw_date, numbers,
                        CARDINALITY(ARRAY(
                            SELECT UNNEST(numbers)
                            INTERSECT
-                           SELECT UNNEST(%s::int[])
+                           SELECT UNNEST(:number)
                        )) AS match_count
                 FROM draw
-                WHERE lottery_id = %s
+                WHERE lottery_id = :id
             ) AS sub
             WHERE match_count > 0
             ORDER BY draw_date DESC;
             """
-            # Query to get the total number of draws
-            self.query_total = "SELECT COUNT(*) FROM draw WHERE lottery_id = %s;"
+            # MODIFIED: Use the :name style
+            self.query_total = "SELECT COUNT(*) FROM draw WHERE lottery_id = :id;"
 
-            # Define parameters for the queries
-            match_params = (numbers, lottery)
-            total_params = (lottery,)
+            # MODIFIED: Ensure the dictionary is complete and matches the query
+            match_params = {"number": numbers, "id": lottery}
+            total_params = {"id": lottery}
 
             # Get raw data from DB using the helper method
             raw_results, total_draws = self._run_db_queries(

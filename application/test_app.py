@@ -25,7 +25,7 @@ def app_server():
     # Use subprocess.Popen to run Streamlit in the background
     try:
         proc = subprocess.Popen(
-            ["streamlit", "run", "app.py", "--server.port", port, "--server.headless", "true"],
+            ["streamlit", "run", "streamlit_app.py", "--server.port", port, "--server.headless", "true"],
             stdout=subprocess.PIPE,
             stderr=subprocess.PIPE
         )
