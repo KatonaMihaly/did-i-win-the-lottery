@@ -50,7 +50,7 @@ def driver():
     options.add_argument("--disable-dev-shm-usage")
 
     # --- Hardcoded driver for local run without internet connection for a driver manager ---
-    service = EdgeService(executable_path=r"../msedgedriver.exe")
+    service = EdgeService(executable_path=r"msedgedriver.exe")
 
     driver_instance = webdriver.Edge(service=service, options=options)
     yield driver_instance
