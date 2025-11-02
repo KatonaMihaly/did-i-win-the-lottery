@@ -30,14 +30,14 @@ def to_sql(df):
     for _, row in df.iterrows():
         date = row['draw_date']
         lottery = row['lottery_id']
-        numbers = [row['n1'], row['n2'], row['n3'], row['n4'], row['n5']]
+        numbers = [row['n1'], row['n2'], row['n3'], row['n4'], row['n5'], row['n6'], row['n7']]
         sql = f"('{date}', '{lottery}', ARRAY[{','.join(map(str, numbers))}]),"
         lines.append(sql)
 
-    with open('../../SQL_commands/draw_numbers_hu5_SQL.txt', 'w') as f:
+    with open('../../SQL_commands/draw_numbers_hu7a_SQL.txt', 'w') as f:
         f.write('\n'.join(lines))
 
 if __name__ == '__main__':
-    fixed_df = complete_draws('draw_numbers_hu5.csv')
+    fixed_df = complete_draws('draw_numbers_hu7_mech.csv')
     del fixed_df['date']
     to_sql(fixed_df)
