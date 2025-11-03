@@ -148,7 +148,8 @@ class WinningNumbers:
                     match_count_b > 0 OR
                     match_count_a > 0
                 ORDER BY
-                    sub_a.draw_date DESC;
+                    sub_a.draw_date DESC
+                    LIMIT 200;
                             """
 
             self.query_total = "SELECT COUNT(*) FROM draw WHERE lottery_id = ?;"
@@ -176,7 +177,8 @@ class WinningNumbers:
             FROM draw
             WHERE lottery_id = ?
             AND match_count > 0 
-            ORDER BY draw_date DESC;
+            ORDER BY draw_date DESC
+            LIMIT 200;
             """
 
             self.query_total = "SELECT COUNT(*) FROM draw WHERE lottery_id = ?;"
