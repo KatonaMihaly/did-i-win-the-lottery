@@ -9,6 +9,7 @@ class WinningNumbers:
         """Initialize the class with lottery ID and the user's numbers."""
         self._lottery_id = _lottery_id
         self._input_numbers = _input_numbers
+        self._match_count = st.session_state[f"matches_{_lottery_id}"]
 
         # All DB variables are now handled by st.connection
         # and defined in .streamlit/secrets.toml file.
@@ -36,6 +37,33 @@ class WinningNumbers:
 
         except TypeError:
             print("Invalid lottery ID type. Cannot convert to string.")
+
+    def _check_validity_match_count(self):
+        """
+        Validates the match count for the current lottery ID from session state.
+        Returns the valid match count (int) on success, or None on failure.
+        """
+        try:
+            # 1. Get the rules for the current lottery
+            rules = {'hu5': [1,2,3,4,5], 'hu6': [1,2,3,4,5,6], 'hu7': [1,2,3,4,5,6,7]}
+
+            # 2. Get the match range
+            match_range = rules[self._lottery_id]
+
+            # 3. Convert to integer
+            # This will raise ValueError/TypeError if it's not a valid int
+            match_count = int(self._match_count)
+
+            # 4. Check if the integer is in the valid range
+            if match_count in match_range:
+                return match_count
+            else:
+                # It's an int, but out of range (e.g., 0 or 8 for a 6-limit)
+                return None
+
+        except (KeyError, ValueError, TypeError):
+            print(f"Error validating match count for {self._lottery_id}.")
+            return None
 
     def _check_validity_numbers(self):
         """
@@ -126,15 +154,22 @@ class WinningNumbers:
         It validates input, defines queries, runs them, and formats the output.
         """
 
+        formatted_results, total_draws, winning_draws = [], 0, 0
+
         # Step 1: Validate the lottery ID
         lottery = self._check_validity_lottery()
         if not lottery:
-            return [], 0  # Invalid lottery_id, return empty results
+            return  formatted_results, total_draws, winning_draws  # Invalid lottery_id, return empty results
 
         # Step 2: Validate the user's numbers
         numbers = self._check_validity_numbers()
         if not numbers:
-            return [], 0  # Invalid numbers, return empty results
+            return  formatted_results, total_draws, winning_draws  # Invalid numbers, return empty results
+
+        # Step 3: Validate the user's match count
+        match_count = self._check_validity_match_count()
+        if not match_count:
+            return  formatted_results, total_draws, winning_draws  # Invalid match count, return empty results
 
         # Initialize variables
         formatted_results = []
@@ -142,7 +177,6 @@ class WinningNumbers:
 
         # --- Logic for 'hu7' (which has two sets of numbers) ---
         if self._lottery_id == 'hu7':
-            # MODIFIED: Use the :name style for ALL parameters
             self.query_matches = """
                         SELECT
                             sub_a.draw_date,
@@ -179,21 +213,20 @@ class WinningNumbers:
                         ON
                             sub_a.draw_date = sub_b.draw_date
                         WHERE
-                            sub_b.match_count > 0 OR
-                            sub_a.match_count > 0
+                            sub_b.match_count = :match_count OR
+                            sub_a.match_count = :match_count
                         ORDER BY
                             sub_a.draw_date DESC
                         LIMIT 50;
                             """
-            # MODIFIED: Use the :name style
             self.query_total = "SELECT COUNT(*) FROM draw WHERE lottery_id = :id;"
 
-            # MODIFIED: Ensure the dictionary is complete
             match_params = {
                 "numbers_a": numbers,
                 "id_a": 'hu7a',
                 "numbers_b": numbers,
-                "id_b": 'hu7b'
+                "id_b": 'hu7b',
+                "match_count": match_count
             }
             total_params = {"id": 'hu7a'}
 
@@ -206,12 +239,11 @@ class WinningNumbers:
             formatted_results = [(row[0].strftime("%Y-%m-%d"), row[1], row[2], row[3], row[4]) for row in
                                  raw_results]
 
-            winning_draws = raw_results[0][-1]
+
+            winning_draws = raw_results[0][-1] if raw_results else 0
 
         # --- Logic for 'hu5' or 'hu6' (which have one set of numbers) ---
         elif self._lottery_id == 'hu5' or self._lottery_id == 'hu6':
-
-            # MODIFIED: Use the :name style for ALL parameters
             self.query_matches = """
             SELECT *, COUNT(*) OVER () AS total_count 
             FROM (
@@ -224,15 +256,13 @@ class WinningNumbers:
                 FROM draw
                 WHERE lottery_id = :id
             ) AS sub
-            WHERE match_count > 0
+            WHERE match_count = :match_count
             ORDER BY draw_date DESC
             LIMIT 50;
             """
-            # MODIFIED: Use the :name style
             self.query_total = "SELECT COUNT(*) FROM draw WHERE lottery_id = :id;"
 
-            # MODIFIED: Ensure the dictionary is complete and matches the query
-            match_params = {"number": numbers, "id": lottery}
+            match_params = {"number": numbers, "id": lottery, 'match_count': match_count}
             total_params = {"id": lottery}
 
             # Get raw data from DB using the helper method
@@ -243,7 +273,7 @@ class WinningNumbers:
             # --- Format results for hu5/hu6 (Date, Match Count) ---
             formatted_results = [(row[0].strftime("%Y-%m-%d"), row[1], row[2]) for row in raw_results]
 
-            winning_draws = raw_results[0][-1]
+            winning_draws = raw_results[0][-1] if raw_results else 0
 
         # Return the final formatted results and the total draw count
         return formatted_results, total_draws, winning_draws
