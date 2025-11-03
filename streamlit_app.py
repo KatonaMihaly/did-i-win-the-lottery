@@ -15,7 +15,7 @@ class StreamlitFrontend:
     TEXT = {
         "en": {
             "welcome_title": "Choose your language!",
-            "welcome_activity": "🎯 Check out how many times you would have won on the hungarian lottery!",
+            "welcome_activity": "🎯 Check how many times you would have won the hungarian lottery!",
             "welcome_goals": "🍀 Submit your lucky numbers and check how many times you would have won the lottery if"
                              " you had played every game since the beginning of the lottery!",
             "disclaimer_title": "⚠️ User agreement",
