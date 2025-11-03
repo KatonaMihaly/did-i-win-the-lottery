@@ -30,11 +30,11 @@ def to_sql(df):
     for _, row in df.iterrows():
         date = row['draw_date']
         lottery = row['lottery_id']
-        numbers = [row['n1'], row['n2'], row['n3'], row['n4'], row['n5']]
-        sql = f"('{date}', '{lottery}', ARRAY[{','.join(map(str, numbers))}]),"
+        numbers = ','.join(map(str, row.iloc[-6:-1]))
+        sql = f"('{date}', '{lottery}', '{numbers}'),"
         lines.append(sql)
 
-    with open('../../SQL_commands/draw_numbers_hu5_SQL.txt', 'w') as f:
+    with open('../SQL_commands/draw_numbers_hu5_SQL.txt', 'w') as f:
         f.write('\n'.join(lines))
 
 if __name__ == '__main__':

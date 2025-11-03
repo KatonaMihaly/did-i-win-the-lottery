@@ -1,6 +1,5 @@
 Ez az alkalmazás kizárólag tájékoztató és szórakoztató célokat szolgál.
 Nem garantálja a lottóadatok pontosságát vagy teljességét.
 A hivatalos eredményeket mindig az illetékes forrásokból ellenőrizd!
+Ez az applikáció fejlesztés alatt áll és nem teljes.
 A "Elfogadom" gombra kattintva tudomásul veszed, hogy a programot saját felelősségedre használod.
-
-FEJLESZTÉS ALATT! NE HASZNÁLD!

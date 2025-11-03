@@ -1,6 +1,6 @@
 # --- Import necessary libraries ---
 import streamlit as st
-import backend as sc  # Assumes your backend code is in 'backend.py'
+import backend as sc
 import os
 
 
@@ -16,16 +16,16 @@ class StreamlitFrontend:
         "en": {
             "welcome_title": "Choose your language!",
             "welcome_activity": "🎯 Check out how many times you would have won the lottery!",
-            "welcome_goals": "🍀 Submit your lucky numbers and check how many times you would have won the lottery if you"
-                             " had played every game since the beginning of the lottery!",
+            "welcome_goals": "🍀 Submit your lucky numbers and check how many times you would have won the lottery if"
+                             " you had played every game since the beginning of the lottery!",
             "disclaimer_title": "⚠️ User agreement",
             "disclaimer_file": "disclaimer_en.txt",
             "accept_button": "✅ I Accept",
             "back_button": "⬅️ Back",
             "selector_title": "Choose the type of lottery!",
-            "picker_title_hu5": "🎲 Pick your 5 lottery numbers",
-            "picker_title_hu6": "🎲 Pick your 6 lottery numbers",
-            "picker_title_hu7": "🎲 Pick your 7 lottery numbers",
+            "picker_title_hu5": "🎲 Pick your 5 lottery numbers.",
+            "picker_title_hu6": "🎲 Pick your 6 lottery numbers.",
+            "picker_title_hu7": "🎲 Pick your 7 lottery numbers.",
             "submit_button": "Submit",
             "results_header": "🎯 Lottery Results",
             "results_lucky": "🍀 Your lucky numbers:",
@@ -38,10 +38,10 @@ class StreamlitFrontend:
             "matches_manual_col": "⭐ Matches",
             "success_hu5_hu6": "🎉 You won {wins} times out of {length} draws since the start of the lottery! 🎉",
             "success_hu7": "🎉 You won {wins} times out of {length} draws since the start of the lottery! 🎉",
-            "last_update": "🔄 Last database update: 31/10/2025"
+            "last_update": "🔄 Last database update: 02/11/2025"
         },
         "hu": {
-            "welcome_title": "Válaszd ki a nyelvet!",
+            "welcome_title": "Válassz nyelvet!",
             "welcome_activity": "🎯 Tudd meg, hányszor nyertél volna a lottón!",
             "welcome_goals": "🍀 Add meg a nyerőszámaid, és tudd meg, hányszor nyertél volna a lottón, ha a lottó"
                              " kezdete óta minden húzáson részt vettél volna!",
@@ -65,7 +65,7 @@ class StreamlitFrontend:
             "matches_manual_col": "⭐ Találatok száma",
             "success_hu5_hu6": "🎉 Az eddigi {length} húzásból {wins} esetben volt találatod! 🎉",
             "success_hu7": "🎉 Az eddigi {length} húzásból {wins} esetben volt találatod! 🎉",
-            "last_update": "🔄 Adatbázis utolsó frissítése: 31/10/2025"
+            "last_update": "🔄 Adatbázis utolsó frissítése: 2025.11.02."
         }
     }
 
@@ -199,7 +199,7 @@ class StreamlitFrontend:
         """
         A single, dynamic page for picking numbers.
         """
-        st.set_page_config(page_title="Lottery Picker", layout="centered")
+        st.set_page_config(page_title='Would I win the lottery?', page_icon="🎲", layout="centered")
 
         # Get the rules for this lottery
         try:
@@ -394,7 +394,7 @@ def run_app():
             "get_winning_numbers" not in st.session_state
     ):
         frontend.call_pages('picker', lottery_id=st.session_state["lottery_id"], txt=txt)
-
+        return
 
     # --- Page 5: Results Page ---
     if "get_winning_numbers" in st.session_state:

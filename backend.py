@@ -1,9 +1,4 @@
 import streamlit as st
-import pandas as pd
-# Removed unused imports from typing to match the minimal style of the working code
-import os
-# Added pandas back, as it's needed for df_matches.itertuples
-import pandas as pd 
 
 class WinningNumbers:
     """A class to calculate winning numbers"""
@@ -88,11 +83,9 @@ class WinningNumbers:
             conn = st.connection("snowflake")
 
             # 2. First query: find all matching draws
-            # Pass the wrapped parameters list
             df_matches = conn.query(query_matches, params=match_params, ttl="1m")
 
             # 3. Second query: find the total number of draws
-            # Pass the wrapped parameters list
             df_total = conn.query(query_total, params=total_params, ttl="1m")
 
             # Convert the matches DataFrame to a list of tuples,
@@ -101,7 +94,6 @@ class WinningNumbers:
             # Extract the single count value from the total_draws DataFrame
             total_draws = int(df_total.iloc[0, 0])
 
-            # Return the data in the format your other methods expect
             return results, total_draws
 
         except Exception as e:
@@ -128,9 +120,8 @@ class WinningNumbers:
         formatted_results = []
         total_draws = 0
 
-        # --- Logic for 'hu7' (which has two sets of numbers) ---
+        # Logic for hu7
         if self._lottery_id == 'hu7':
-            # 🟢 Standardized SQL using SPLIT and ARRAY_INTERSECTION
             self.query_matches = """
                 SELECT
                     sub_a.draw_date,
@@ -159,7 +150,7 @@ class WinningNumbers:
                 ORDER BY
                     sub_a.draw_date DESC;
                             """
-            # Total query remains simple
+
             self.query_total = "SELECT COUNT(*) FROM draw WHERE lottery_id = ?;"
             
             match_params = (numbers_str, numbers_str, 'hu7a', 'hu7b',)
@@ -170,11 +161,11 @@ class WinningNumbers:
                 self.query_matches, match_params, self.query_total, total_params
             )
 
-            # --- Format results for hu7 (Date, Match A, Match B) ---
+            # Format results for hu7 (date, numbers_a, matches_a, numbers_b, matches_b)
             formatted_results = [(row[0].strftime("%Y-%m-%d"), row[1], row[2], row[3], row[4]) for row in
                                  raw_results]
 
-        # --- Logic for 'hu5' or 'hu6' (which have one set of numbers) ---
+        # Logic for hu5 or hu6
         elif self._lottery_id == 'hu5' or self._lottery_id == 'hu6':
             self.query_matches = """
             SELECT draw_date, numbers,
@@ -187,10 +178,10 @@ class WinningNumbers:
             AND match_count > 0 
             ORDER BY draw_date DESC;
             """
-            # Total query remains simple
+
             self.query_total = "SELECT COUNT(*) FROM draw WHERE lottery_id = ?;"
 
-            match_params = (numbers_str, lottery,) # Use the validated string
+            match_params = (numbers_str, lottery,)
             total_params = (lottery,)
 
             # Get raw data from DB using the helper method
@@ -198,8 +189,7 @@ class WinningNumbers:
                 self.query_matches, match_params, self.query_total, total_params
             )
 
-            # --- Format results for hu5/hu6 (Date, Numbers, Match Count) ---
+            # Format results for hu5/hu6 (date, numbers, matches)
             formatted_results = [(row[0].strftime("%Y-%m-%d"), row[1], row[2]) for row in raw_results]
 
-        # Return the final formatted results and the total draw count
         return formatted_results, total_draws
