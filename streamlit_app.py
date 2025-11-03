@@ -1,4 +1,4 @@
-# --- Import necessary libraries ---
+#  Import necessary libraries 
 import streamlit as st
 import backend as sc  # Assumes your backend code is in 'backend.py'
 import os
@@ -10,7 +10,7 @@ class StreamlitFrontend:
     Manages UI state and component rendering.
     """
 
-    # --- Text Dictionary ---
+    #  Text Dictionary 
     # All display text is stored here, keyed by language.
     TEXT = {
         "en": {
@@ -23,6 +23,7 @@ class StreamlitFrontend:
             "accept_button": "✅ I Accept",
             "back_button": "⬅️ Back",
             "selector_title": "Choose the type of lottery!",
+            "selector_matches": "🎯 Pick the number of matches.",
             "picker_title_hu5": "🎲 Pick your 5 lottery numbers.",
             "picker_title_hu6": "🎲 Pick your 6 lottery numbers.",
             "picker_title_hu7": "🎲 Pick your 7 lottery numbers.",
@@ -50,7 +51,8 @@ class StreamlitFrontend:
             "disclaimer_file": "disclaimer_hu.txt",
             "accept_button": "✅ Elfogadom",
             "back_button": "⬅️ Vissza",
-            "selector_title": "Válaszd ki a lottó típusát!",
+            "selector_title": "🎰 Válaszd ki a lottó típusát!",
+            "selector_matches": "🎯 Válaszd ki a találatok számát!",
             "picker_title_hu5": "🎲 Add meg az 5 nyerőszámod!",
             "picker_title_hu6": "🎲 Add meg a 6 nyerőszámod!",
             "picker_title_hu7": "🎲 Add meg a 7 nyerőszámod!",
@@ -71,7 +73,7 @@ class StreamlitFrontend:
         }
     }
 
-    # --- Rules Dictionary ---
+    #  Rules Dictionary 
     # This dictionary drives the dynamic number picker page, with the lottery rules.
     LOTTERY_RULES = {
         'hu5': {
@@ -94,7 +96,7 @@ class StreamlitFrontend:
         }
     }
 
-    # --- Helper Methods ---
+    #  Helper Methods 
 
     def _clear_session_keys(self, keys_to_clear):
         """
@@ -104,7 +106,7 @@ class StreamlitFrontend:
         for key in keys_to_clear:
             st.session_state.pop(key, None)
 
-    # --- Page Rendering Methods ---
+    #  Page Rendering Methods 
 
     def _welcome_page(self):
         """Streamlit Welcome Page for language selection."""
@@ -214,22 +216,59 @@ class StreamlitFrontend:
         limit = rules['limit']
         max_num = rules['max_num']
         num_cols = rules['cols']
+
+        # Main session key for picked numbers
         session_key = rules['session_key']
 
-        # Use dynamic title based on lottery_id
-        st.title(txt[f"picker_title_{_lottery_id}"])
+        # Dynamic session key for selected matches
+        matches_key = f"matches_{_lottery_id}"
 
-        if session_key not in st.session_state:
-            st.session_state[session_key] = set()
+        #  Initialize/Validate state for match filter
+        if (matches_key not in st.session_state or
+                st.session_state[matches_key] > limit):
+            st.session_state[matches_key] = limit
 
-        def toggle_number(num: int):
+        #  Main number picking logic (unchanged) 
+        def toggle_number(num: int, lim):
             """Helper function to add/remove a number from the set."""
             if num in st.session_state[session_key]:
                 st.session_state[session_key].remove(num)
-            elif len(st.session_state[session_key]) < limit:
+            elif len(st.session_state[session_key]) < lim:
                 st.session_state[session_key].add(num)
 
-        # --- Draw the number grid dynamically ---
+        # Helper function for match filter
+        def set_matches(num: int):
+            """Helper function to set the number of matches to filter for."""
+            st.session_state[matches_key] = num
+
+        st.title(txt["selector_matches"])
+
+        #  Match filter selector
+        cols = st.columns(num_cols)
+        for j in range(1, limit + 1):
+            col_index = (j - 1) % num_cols
+            colp = cols[col_index]
+
+            with colp:
+                # Check against the dynamic session state variable
+                selected = (j == st.session_state[matches_key])
+                btn_type = "primary" if selected else "secondary"
+
+                if st.button(str(j), key=f"match_{_lottery_id}_{j}", use_container_width=True, type=btn_type):
+                    set_matches(j)
+                    st.rerun()
+
+            if j % num_cols == 0 and j != limit:
+                cols = st.columns(num_cols)
+
+        #  Main number picker
+        st.title(txt[f"picker_title_{_lottery_id}"])
+
+        # Initialize main number set
+        if session_key not in st.session_state:
+            st.session_state[session_key] = set()
+
+        #  Draw the number grid dynamically
         cols = st.columns(num_cols)
         for i in range(1, max_num + 1):
             col_index = (i - 1) % num_cols
@@ -240,14 +279,14 @@ class StreamlitFrontend:
                 btn_type = "primary" if selected else "secondary"
 
                 if st.button(str(i), key=f"num_{_lottery_id}_{i}", use_container_width=True, type=btn_type):
-                    toggle_number(i)
+                    toggle_number(i, limit)
                     st.rerun()
 
             # Start a new row
             if i % num_cols == 0 and i != max_num:
                 cols = st.columns(num_cols)
 
-        # --- Dynamic Submit Button ---
+        #  Dynamic Submit Button
         is_disabled = len(st.session_state[session_key]) != limit
         if st.button(txt["submit_button"], type="primary", use_container_width=True, disabled=is_disabled):
             st.session_state.get_winning_numbers = True
@@ -258,7 +297,7 @@ class StreamlitFrontend:
         Fetches and displays the results.
         """
 
-        # --- Call Backend ---
+        #  Call Backend 
         # Show a spinner while fetching data
         with st.spinner("Checking results..."):
             try:
@@ -275,7 +314,7 @@ class StreamlitFrontend:
         st.write(txt["limit"])
 
 
-        # --- Display Results (Dynamic) ---
+        #  Display Results
         if _lottery_id == "hu7":
             # 5-column layout for hu7
             col1, col2, col3, col4, col5 = st.columns(5)
@@ -366,28 +405,28 @@ def run_app():
     """
     frontend = StreamlitFrontend()
 
-    # --- Page 1: Welcome / Language Selection ---
+    #  Page 1: Welcome / Language Selection 
     if "language" not in st.session_state:
         frontend.call_pages('welcome')
         return
 
-    # --- Language is set, get the correct text ---
+    #  Language is set, get the correct text 
     # Default to English if language state is somehow invalid
     txt = frontend.TEXT.get(st.session_state["language"], frontend.TEXT["en"])
 
-    # --- Page 2: Disclaimer ---
+    #  Page 2: Disclaimer 
     if not st.session_state.get("disclaimer_accepted", False):
         frontend.call_pages('disclaimer', txt=txt)
         return
 
-    # --- Page 3: Lottery Selector ---
+    #  Page 3: Lottery Selector 
     if ("language" in st.session_state and
             st.session_state.get("disclaimer_accepted", True) and
             "get_winning_numbers" not in st.session_state
     ):
         frontend.call_pages('selector', txt=txt)
 
-    # --- Page 4: Number Picker ---
+    #  Page 4: Number Picker 
     # Check this *before* the lottery selector.
     if ("language" in st.session_state and
             st.session_state.get("disclaimer_accepted", True) and
@@ -396,8 +435,7 @@ def run_app():
     ):
         frontend.call_pages('picker', lottery_id=st.session_state["lottery_id"], txt=txt)
 
-
-    # --- Page 5: Results Page ---
+    #  Page 5: Results Page 
     if "get_winning_numbers" in st.session_state:
         lottery_id = st.session_state["lottery_id"]
         rules = frontend.LOTTERY_RULES[lottery_id]
@@ -407,7 +445,6 @@ def run_app():
         frontend.call_pages('results', st.session_state["language"], txt, lottery_id, selected_numbers)
         return
 
-
-# --- Main execution ---
+#  Main execution 
 if __name__ == "__main__":
     run_app()
