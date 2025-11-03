@@ -294,11 +294,11 @@ class StreamlitFrontend:
                 with col1:
                     st.write(r[0])  # Date
                 with col2:
-                    st.write(', '.join([str(s) for s in r[1]]))  # Numbers A
+                    st.write(r[1])  # Numbers A
                 with col3:
                     st.write(r[2])  # Match A
                 with col4:
-                    st.write(', '.join([str(s) for s in r[3]]))  # Numbers A
+                    st.write(r[3])  # Numbers A
                 with col5:
                     st.write(r[4])  # Match B
 
@@ -323,7 +323,7 @@ class StreamlitFrontend:
                 with col1:
                     st.write(r[0])  # Date
                 with col2:
-                    st.write(', '.join([str(s) for s in r[1]])) # Numbers
+                    st.write(r[1]) # Numbers
                 with col3:
                     st.write(r[2])  # Match Count
 
