@@ -101,10 +101,10 @@ class WinningNumbers:
             # 2. First query: find all matching draws
             # conn.query() returns a Pandas DataFrame.
             # Pass parameters using the 'params' argument.
-            df_matches = conn.query(query_matches, params=match_params, ttl="0m")
+            df_matches = conn.query(query_matches, params=match_params, ttl="1m")
 
             # 3. Second query: find the total number of draws
-            df_total = conn.query(query_total, params=total_params, ttl="0m")
+            df_total = conn.query(query_total, params=total_params, ttl="1m")
 
             # Convert the matches DataFrame to a list of tuples,
             results = list(df_matches.itertuples(index=False, name=None))
@@ -149,7 +149,8 @@ class WinningNumbers:
                             sub_a.numbers,
                             sub_a.match_count AS match_count_a,
                             sub_b.numbers,
-                            sub_b.match_count AS match_count_b
+                            sub_b.match_count AS match_count_b,
+                            COUNT(*) OVER () AS total_count 
                         FROM
                             (
                                 SELECT
@@ -181,7 +182,8 @@ class WinningNumbers:
                             sub_b.match_count > 0 OR
                             sub_a.match_count > 0
                         ORDER BY
-                            sub_a.draw_date DESC;
+                            sub_a.draw_date DESC
+                        LIMIT 50;
                             """
             # MODIFIED: Use the :name style
             self.query_total = "SELECT COUNT(*) FROM draw WHERE lottery_id = :id;"
@@ -204,12 +206,15 @@ class WinningNumbers:
             formatted_results = [(row[0].strftime("%Y-%m-%d"), row[1], row[2], row[3], row[4]) for row in
                                  raw_results]
 
+            winning_draws = raw_results[0][-1]
+
         # --- Logic for 'hu5' or 'hu6' (which have one set of numbers) ---
         elif self._lottery_id == 'hu5' or self._lottery_id == 'hu6':
 
             # MODIFIED: Use the :name style for ALL parameters
             self.query_matches = """
-            SELECT * FROM (
+            SELECT *, COUNT(*) OVER () AS total_count 
+            FROM (
                 SELECT draw_date, numbers,
                        CARDINALITY(ARRAY(
                            SELECT UNNEST(numbers)
@@ -220,7 +225,8 @@ class WinningNumbers:
                 WHERE lottery_id = :id
             ) AS sub
             WHERE match_count > 0
-            ORDER BY draw_date DESC;
+            ORDER BY draw_date DESC
+            LIMIT 50;
             """
             # MODIFIED: Use the :name style
             self.query_total = "SELECT COUNT(*) FROM draw WHERE lottery_id = :id;"
@@ -237,5 +243,7 @@ class WinningNumbers:
             # --- Format results for hu5/hu6 (Date, Match Count) ---
             formatted_results = [(row[0].strftime("%Y-%m-%d"), row[1], row[2]) for row in raw_results]
 
+            winning_draws = raw_results[0][-1]
+
         # Return the final formatted results and the total draw count
-        return formatted_results, total_draws
+        return formatted_results, total_draws, winning_draws

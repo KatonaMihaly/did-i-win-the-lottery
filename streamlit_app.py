@@ -16,16 +16,16 @@ class StreamlitFrontend:
         "en": {
             "welcome_title": "Choose your language!",
             "welcome_activity": "🎯 Check out how many times you would have won the lottery!",
-            "welcome_goals": "🍀 Submit your lucky numbers and check how many times you would have won the lottery if you"
-                             " had played every game since the beginning of the lottery!",
+            "welcome_goals": "🍀 Submit your lucky numbers and check how many times you would have won the lottery if"
+                             " you had played every game since the beginning of the lottery!",
             "disclaimer_title": "⚠️ User agreement",
             "disclaimer_file": "disclaimer_en.txt",
             "accept_button": "✅ I Accept",
             "back_button": "⬅️ Back",
             "selector_title": "Choose the type of lottery!",
-            "picker_title_hu5": "🎲 Pick your 5 lottery numbers",
-            "picker_title_hu6": "🎲 Pick your 6 lottery numbers",
-            "picker_title_hu7": "🎲 Pick your 7 lottery numbers",
+            "picker_title_hu5": "🎲 Pick your 5 lottery numbers.",
+            "picker_title_hu6": "🎲 Pick your 6 lottery numbers.",
+            "picker_title_hu7": "🎲 Pick your 7 lottery numbers.",
             "submit_button": "Submit",
             "results_header": "🎯 Lottery Results",
             "results_lucky": "🍀 Your lucky numbers:",
@@ -36,12 +36,13 @@ class StreamlitFrontend:
             "matches_mech_col": "⭐ Matches",
             "numbers_manual_col": "🎰 Manual draw",
             "matches_manual_col": "⭐ Matches",
-            "success_hu5_hu6": "🎉 You won {wins} times out of {length} draws since the start of the lottery! 🎉",
-            "success_hu7": "🎉 You won {wins} times out of {length} draws since the start of the lottery! 🎉",
-            "last_update": "🔄 Last database update: 31/10/2025"
+            "success_hu5_hu6": "🎉 You would have won in {wins} draws out of {length} draws since the start of the lottery! 🎉",
+            "success_hu7": "🎉 You would have won in {wins} draws out of {length} draws since the start of the lottery! 🎉",
+            "last_update": "🔄 Last database update: 02/11/2025",
+            "limit": "*results are limited to 50 rows for efficient display."
         },
         "hu": {
-            "welcome_title": "Válaszd ki a nyelvet!",
+            "welcome_title": "Válassz nyelvet!",
             "welcome_activity": "🎯 Tudd meg, hányszor nyertél volna a lottón!",
             "welcome_goals": "🍀 Add meg a nyerőszámaid, és tudd meg, hányszor nyertél volna a lottón, ha a lottó"
                              " kezdete óta minden húzáson részt vettél volna!",
@@ -63,9 +64,10 @@ class StreamlitFrontend:
             "matches_mech_col": "⭐ Találatok száma",
             "numbers_manual_col": "🎰 Kézi húzás",
             "matches_manual_col": "⭐ Találatok száma",
-            "success_hu5_hu6": "🎉 Az eddigi {length} húzásból {wins} esetben volt találatod! 🎉",
-            "success_hu7": "🎉 Az eddigi {length} húzásból {wins} esetben volt találatod! 🎉",
-            "last_update": "🔄 Adatbázis utolsó frissítése: 31/10/2025"
+            "success_hu5_hu6": "🎉 Az eddigi {length} húzásból {wins} húzáson lett volna találatod! 🎉",
+            "success_hu7": "🎉 Az eddigi {length} húzásból {wins} húzáson lett volna találatod! 🎉",
+            "last_update": "🔄 Adatbázis utolsó frissítése: 2025.11.02.",
+            "limit": "*az eredmények 50 sorra vannak korlátozva."
         }
     }
 
@@ -199,7 +201,7 @@ class StreamlitFrontend:
         """
         A single, dynamic page for picking numbers.
         """
-        st.set_page_config(page_title="Lottery Picker", layout="centered")
+        st.set_page_config(page_title='Would I win the lottery?', page_icon="🎲", layout="centered")
 
         # Get the rules for this lottery
         try:
@@ -260,7 +262,7 @@ class StreamlitFrontend:
         # Show a spinner while fetching data
         with st.spinner("Checking results..."):
             try:
-                results, length = sc.WinningNumbers(_lottery_id, _user_input).check_lottery_numbers()
+                results, length, wins = sc.WinningNumbers(_lottery_id, _user_input).check_lottery_numbers()
             except Exception as e:
                 st.error(f"An error occurred while fetching results: {e}")
                 st.button(txt["back_button"], on_click=self._clear_session_keys, args=(['get_winning_numbers'],))
@@ -270,6 +272,7 @@ class StreamlitFrontend:
         st.header(txt["results_header"])
         st.header(txt["last_update"])
         st.header(txt["results_lucky"]+f" {', '.join([str(s) for s in _user_input])}")
+        st.write(txt["limit"])
 
 
         # --- Display Results (Dynamic) ---
@@ -303,7 +306,6 @@ class StreamlitFrontend:
                     st.write(r[4])  # Match B
 
             # Complex win calculation for hu7
-            wins = sum([2 if (r[2] > 0 and r[4] > 0) else 1 if (r[2] > 0 or r[4] > 0) else 0 for r in results])
             st.success(txt["success_hu7"].format(wins=wins, length=length))
 
         elif _lottery_id == "hu5" or _lottery_id == "hu6":
@@ -328,7 +330,6 @@ class StreamlitFrontend:
                     st.write(r[2])  # Match Count
 
             # Simple win calculation
-            wins = len(results)
             st.success(txt["success_hu5_hu6"].format(wins=wins, length=length))
 
         # Back button to return to the number picker
