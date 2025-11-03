@@ -15,7 +15,7 @@ class StreamlitFrontend:
     TEXT = {
         "en": {
             "welcome_title": "Choose your language!",
-            "welcome_activity": "🎯 Check out how many times you would have won the lottery!",
+            "welcome_activity": "🎯 Check out how many times you would have won on the hungarian lottery!",
             "welcome_goals": "🍀 Submit your lucky numbers and check how many times you would have won the lottery if"
                              " you had played every game since the beginning of the lottery!",
             "disclaimer_title": "⚠️ User agreement",
@@ -45,7 +45,7 @@ class StreamlitFrontend:
         },
         "hu": {
             "welcome_title": "Válassz nyelvet!",
-            "welcome_activity": "🎯 Tudd meg, hányszor nyertél volna a lottón!",
+            "welcome_activity": "🎯 Tudd meg, hányszor nyertél volna a magyar lottón!",
             "welcome_goals": "🍀 Add meg a nyerőszámaid, és tudd meg, hányszor nyertél volna a lottón, ha a lottó"
                              " kezdete óta minden húzáson részt vettél volna!",
             "disclaimer_title": "⚠️ Felhasználási feltételek",
