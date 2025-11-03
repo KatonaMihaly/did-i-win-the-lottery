@@ -40,7 +40,7 @@ class StreamlitFrontend:
             "success_hu5_hu6": "🎉 You would have won in {wins} draws out of {length} draws since the start of the lottery! 🎉",
             "success_hu7": "🎉 You would have won in {wins} draws out of {length} draws since the start of the lottery! 🎉",
             "last_update": "🔄 Last database update: 02/11/2025",
-            "limit": "*results are limited to 50 rows for efficient display."
+            "limit": "*results are limited to 20 rows for efficient display."
         },
         "hu": {
             "welcome_title": "Válassz nyelvet!",
@@ -69,7 +69,7 @@ class StreamlitFrontend:
             "success_hu5_hu6": "🎉 Az eddigi {length} húzásból {wins} húzáson lett volna találatod! 🎉",
             "success_hu7": "🎉 Az eddigi {length} húzásból {wins} húzáson lett volna találatod! 🎉",
             "last_update": "🔄 Adatbázis utolsó frissítése: 2025.11.02.",
-            "limit": "*az eredmények 50 sorra vannak korlátozva."
+            "limit": "*az eredmények 20 sorra vannak korlátozva."
         }
     }
 

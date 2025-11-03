@@ -217,7 +217,7 @@ class WinningNumbers:
                             sub_a.match_count = :match_count
                         ORDER BY
                             sub_a.draw_date DESC
-                        LIMIT 50;
+                        LIMIT 20;
                             """
             self.query_total = "SELECT COUNT(*) FROM draw WHERE lottery_id = :id;"
 
@@ -258,7 +258,7 @@ class WinningNumbers:
             ) AS sub
             WHERE match_count = :match_count
             ORDER BY draw_date DESC
-            LIMIT 50;
+            LIMIT 20;
             """
             self.query_total = "SELECT COUNT(*) FROM draw WHERE lottery_id = :id;"
 
