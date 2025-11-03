@@ -28,8 +28,9 @@ class StreamlitFrontend:
             "picker_title_hu6": "🎲 Pick your 6 lottery numbers.",
             "picker_title_hu7": "🎲 Pick your 7 lottery numbers.",
             "submit_button": "Submit",
-            "results_header": "🎯 Lottery Results",
+            "results_header": "🎰 Lottery Results",
             "results_lucky": "🍀 Your lucky numbers:",
+            "results_match": "🎯 Match count:",
             "date_col": "🗓️ Draw Date",
             "draw_numbers": "🎰 Numbers",
             "matches_col": "⭐ Matches",
@@ -57,8 +58,9 @@ class StreamlitFrontend:
             "picker_title_hu6": "🎲 Add meg a 6 nyerőszámod!",
             "picker_title_hu7": "🎲 Add meg a 7 nyerőszámod!",
             "submit_button": "Lássuk!",
-            "results_header": "🎯 Találatok",
+            "results_header": "🎰 Találatok",
             "results_lucky": "🍀 Nyerőszámaid:",
+            "results_match": "🎯 Minimum találat:",
             "date_col": "🗓️ Húzás dátuma",
             "draw_numbers": "🎰 Kihúzott számok",
             "matches_col": "⭐ Találatok száma",
@@ -310,7 +312,12 @@ class StreamlitFrontend:
         st.set_page_config(page_title='Would I win the lottery?', page_icon="🎲", layout="wide")
         st.header(txt["results_header"])
         st.header(txt["last_update"])
-        st.header(txt["results_lucky"]+f" {', '.join([str(s) for s in _user_input])}")
+        col1, col2 = st.columns([2,1])
+        with col1:
+            st.header(txt["results_lucky"]+f" {', '.join([str(s) for s in _user_input])}")
+        with col2:
+            st.header(txt["results_match"]+f" {st.session_state[f"matches_{_lottery_id}"]}")
+
         st.write(txt["limit"])
 
 
