@@ -1,3 +1,6 @@
 streamlit~=1.51.0
 psycopg2-binary~=2.9.10
 sqlalchemy~=2.0.44
+pytest~=8.4.2
+selenium~=4.38.0
+pandas~=2.3.3
