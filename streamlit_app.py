@@ -15,7 +15,7 @@ class StreamlitFrontend:
     TEXT = {
         "en": {
             "welcome_title": "Choose your language!",
-            "welcome_activity": "🎯 Check out how many times you would have won the lottery!",
+            "welcome_activity": "🎯 Check how many times you would have won the hungarian lottery!",
             "welcome_goals": "🍀 Submit your lucky numbers and check how many times you would have won the lottery if"
                              " you had played every game since the beginning of the lottery!",
             "disclaimer_title": "⚠️ User agreement",
@@ -28,8 +28,9 @@ class StreamlitFrontend:
             "picker_title_hu6": "🎲 Pick your 6 lottery numbers.",
             "picker_title_hu7": "🎲 Pick your 7 lottery numbers.",
             "submit_button": "Submit",
-            "results_header": "🎯 Lottery Results",
+            "results_header": "🎰 Lottery Results",
             "results_lucky": "🍀 Your lucky numbers:",
+            "results_match": "🎯 Match count:",
             "date_col": "🗓️ Draw Date",
             "draw_numbers": "🎰 Numbers",
             "matches_col": "⭐ Matches",
@@ -40,11 +41,11 @@ class StreamlitFrontend:
             "success_hu5_hu6": "🎉 You would have won in {wins} draws out of {length} draws since the start of the lottery! 🎉",
             "success_hu7": "🎉 You would have won in {wins} draws out of {length} draws since the start of the lottery! 🎉",
             "last_update": "🔄 Last database update: 02/11/2025",
-            "limit": "*results are limited to 50 rows for efficient display."
+            "limit": "*results are limited to 20 rows for efficient display."
         },
         "hu": {
             "welcome_title": "Válassz nyelvet!",
-            "welcome_activity": "🎯 Tudd meg, hányszor nyertél volna a lottón!",
+            "welcome_activity": "🎯 Tudd meg, hányszor nyertél volna a magyar lottón!",
             "welcome_goals": "🍀 Add meg a nyerőszámaid, és tudd meg, hányszor nyertél volna a lottón, ha a lottó"
                              " kezdete óta minden húzáson részt vettél volna!",
             "disclaimer_title": "⚠️ Felhasználási feltételek",
@@ -57,8 +58,9 @@ class StreamlitFrontend:
             "picker_title_hu6": "🎲 Add meg a 6 nyerőszámod!",
             "picker_title_hu7": "🎲 Add meg a 7 nyerőszámod!",
             "submit_button": "Lássuk!",
-            "results_header": "🎯 Találatok",
+            "results_header": "🎰 Eredmények",
             "results_lucky": "🍀 Nyerőszámaid:",
+            "results_match": "🎯 Találatok száma:",
             "date_col": "🗓️ Húzás dátuma",
             "draw_numbers": "🎰 Kihúzott számok",
             "matches_col": "⭐ Találatok száma",
@@ -69,7 +71,7 @@ class StreamlitFrontend:
             "success_hu5_hu6": "🎉 Az eddigi {length} húzásból {wins} húzáson lett volna találatod! 🎉",
             "success_hu7": "🎉 Az eddigi {length} húzásból {wins} húzáson lett volna találatod! 🎉",
             "last_update": "🔄 Adatbázis utolsó frissítése: 2025.11.02.",
-            "limit": "*az eredmények 50 sorra vannak korlátozva."
+            "limit": "*az eredmények 20 sorra vannak korlátozva."
         }
     }
 
@@ -310,7 +312,12 @@ class StreamlitFrontend:
         st.set_page_config(page_title='Would have I won?', page_icon="🎲", layout="wide")
         st.header(txt["results_header"])
         st.header(txt["last_update"])
-        st.header(txt["results_lucky"]+f" {', '.join([str(s) for s in _user_input])}")
+        col1, col2 = st.columns([2,1])
+        with col1:
+            st.header(txt["results_lucky"]+f" {', '.join([str(s) for s in _user_input])}")
+        with col2:
+            st.header(txt["results_match"]+f" {st.session_state[f"matches_{_lottery_id}"]}")
+
         st.write(txt["limit"])
 
 

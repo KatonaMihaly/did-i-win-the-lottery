@@ -61,12 +61,12 @@ def driver():
 # Each tuple contains the parameters for one full test run.
 test_cases = [
     # (test_id, lang_btn, accept_btn, lottery_btn, num_clicks, submit_btn, result_header, success_msg_part)
-    ('hu5_en', 'English', '✅ I Accept', 'Ötöslottó', 5, 'Submit', '🎯 Lottery Results', 'You would have won'),
-    ('hu6_en', 'English', '✅ I Accept', 'Hatoslottó', 6, 'Submit', '🎯 Lottery Results', 'You would have won'),
-    ('hu7_en', 'English', '✅ I Accept', 'Skandináv lottó', 7, 'Submit', '🎯 Lottery Results', 'You would have won'),
-    ('hu5_hu', 'Magyar', '✅ Elfogadom', 'Ötöslottó', 5, 'Lássuk!', '🎯 Találatok', 'lett volna találatod! 🎉'),
-    ('hu6_hu', 'Magyar', '✅ Elfogadom', 'Hatoslottó', 6, 'Lássuk!', '🎯 Találatok', 'lett volna találatod! 🎉'),
-    ('hu7_hu', 'Magyar', '✅ Elfogadom', 'Skandináv lottó', 7, 'Lássuk!', '🎯 Találatok', 'lett volna találatod! 🎉'),
+    ('hu5_en', 'English', '✅ I Accept', 'Ötöslottó', 5, 'Submit', '🎰 Lottery Results', 'You would have won'),
+    ('hu6_en', 'English', '✅ I Accept', 'Hatoslottó', 6, 'Submit', '🎰 Lottery Results', 'You would have won'),
+    ('hu7_en', 'English', '✅ I Accept', 'Skandináv lottó', 7, 'Submit', '🎰 Lottery Results', 'You would have won'),
+    ('hu5_hu', 'Magyar', '✅ Elfogadom', 'Ötöslottó', 5, 'Lássuk!', '🎰 Eredmények', 'lett volna találatod! 🎉'),
+    ('hu6_hu', 'Magyar', '✅ Elfogadom', 'Hatoslottó', 6, 'Lássuk!', '🎰 Eredmények', 'lett volna találatod! 🎉'),
+    ('hu7_hu', 'Magyar', '✅ Elfogadom', 'Skandináv lottó', 7, 'Lássuk!', '🎰 Eredmények', 'lett volna találatod! 🎉'),
 ]
 
 @pytest.mark.parametrize(
