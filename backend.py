@@ -1,5 +1,4 @@
 # --- Import necessary libraries ---
-import os  # To access environment variables
 import streamlit as st
 
 class WinningNumbers:
@@ -9,9 +8,12 @@ class WinningNumbers:
         """Initialize the class with lottery ID and the user's numbers."""
         self._lottery_id = _lottery_id
         self._input_numbers = _input_numbers
-        self._match_count = st.session_state[f"matches_{_lottery_id}"]
+        try:
+            self._match_count = st.session_state[f"matches_{_lottery_id}"]
+        except KeyError:
+            self._match_count = None
 
-        # All DB variables are now handled by st.connection
+        # All DB variables are handled by st.connection
         # and defined in .streamlit/secrets.toml file.
 
         # Placeholders to store the SQL queries.
@@ -37,6 +39,7 @@ class WinningNumbers:
 
         except TypeError:
             print("Invalid lottery ID type. Cannot convert to string.")
+            return None # Invalid
 
     def _check_validity_match_count(self):
         """

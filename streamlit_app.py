@@ -48,7 +48,7 @@ class StreamlitFrontend:
             "welcome_activity": "🎯 Tudd meg, hányszor nyertél volna a magyar lottón!",
             "welcome_goals": "🍀 Add meg a nyerőszámaid, és tudd meg, hányszor nyertél volna a lottón, ha a lottó"
                              " kezdete óta minden húzáson részt vettél volna!",
-            "disclaimer_title": "⚠️ Felhasználási feltételek",
+            "disclaimer_title": "⚠️ Felhasználási Feltételek és Adatkezelési Tájékoztató",
             "disclaimer_file": "disclaimer_hu.txt",
             "accept_button": "✅ Elfogadom",
             "back_button": "⬅️ Vissza",
@@ -112,7 +112,7 @@ class StreamlitFrontend:
 
     def _welcome_page(self):
         """Streamlit Welcome Page for language selection."""
-        st.set_page_config(page_title='Would I win the lottery?', page_icon="🎲", layout="wide")
+        st.set_page_config(page_title='Would have I won?', page_icon="🎲", layout="wide")
 
         st.title(self.TEXT["hu"]["welcome_activity"])
         st.title(self.TEXT["en"]["welcome_activity"])
@@ -144,7 +144,7 @@ class StreamlitFrontend:
         """
         Display disclaimer that must be accepted.
         """
-        st.set_page_config(page_title='Would I win the lottery?', page_icon="🎲", layout="wide")
+        st.set_page_config(page_title='Would have I won?', page_icon="🎲", layout="wide")
         st.title(txt["disclaimer_title"])
 
         # Sanity check: Try to read the disclaimer file.
@@ -167,7 +167,7 @@ class StreamlitFrontend:
         """
         Display the main lottery selection buttons.
         """
-        st.set_page_config(page_title='Would I win the lottery?', page_icon="🎲", layout="centered")
+        st.set_page_config(page_title='Would have I won?', page_icon="🎲", layout="centered")
         st.title(txt["selector_title"])
 
         col1, col2, col3 = st.columns(3)
@@ -205,7 +205,7 @@ class StreamlitFrontend:
         """
         A single, dynamic page for picking numbers.
         """
-        st.set_page_config(page_title='Would I win the lottery?', page_icon="🎲", layout="centered")
+        st.set_page_config(page_title='Would have I won?', page_icon="🎲", layout="centered")
 
         # Get the rules for this lottery
         try:
@@ -309,7 +309,7 @@ class StreamlitFrontend:
                 st.button(txt["back_button"], on_click=self._clear_session_keys, args=(['get_winning_numbers'],))
                 return
 
-        st.set_page_config(page_title='Would I win the lottery?', page_icon="🎲", layout="wide")
+        st.set_page_config(page_title='Would have I won?', page_icon="🎲", layout="wide")
         st.header(txt["results_header"])
         st.header(txt["last_update"])
         col1, col2 = st.columns([2,1])

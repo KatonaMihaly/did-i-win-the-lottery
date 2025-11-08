@@ -1,6 +1,113 @@
-Ez az alkalmazás kizárólag tájékoztató és szórakoztató célokat szolgál.
-Nem garantálja a lottóadatok pontosságát vagy teljességét.
-A hivatalos eredményeket mindig az illetékes forrásokból ellenőrizd!
-A "Elfogadom" gombra kattintva tudomásul veszed, hogy a programot saját felelősségedre használod.
+Hatályba lépés dátuma: -
 
-FEJLESZTÉS ALATT! NE HASZNÁLD!
+Kérjük, figyelmesen olvassa el az alábbi Felhasználási Feltételeket (a továbbiakban „Feltételek”) és az Adatkezelési
+Tájékoztatót (a továbbiakban „Tájékoztató”) az alkalmazás (továbbiakban „Alkalmazás”) használata előtt.
+
+Az „Elfogadom” gomb megnyomásával, az Alkalmazáshoz való hozzáféréssel vagy annak használatával Ön elfogadja a
+jelen Feltételeket és a Tájékoztatóban foglaltakat.
+
+Kérdés esetén a fejlesztő, Katona Mihály (a továbbiakban "Fejlesztő") elérhetősége: mihaly.katona@outlook.hu
+
+============================================================================
+
+I. Felhasználási Feltételek
+
+1. Az alkalmazás jellege:
+
+Ez az Alkalmazás egy független fejlesztés, amely SEMMILYEN MÓDON NEM ÁLL HIVATALOS KAPCSOLATBAN a Szerencsejáték Zrt.-vel, sem egyéb kapcsolódó szervezetekkel. Az alkalmazást ezen szervezetek egyike sem hagyta jóvá, nem támogatja és nem üzemelteti.
+
+2. Publikus adatok és manuális frissítés:
+
+Az Alkalmazás működéséhez publikusan elérhető adatokat használ (továbbiakban „Nyerőszámok”), amelyek a https://bet.szerencsejatek.hu/ weboldalról származnak. A Fejlesztő garanciát nem vállal a Nyerőszámok pontosságáért, teljességéért és időszerűségéért. A Felhasználó tudomásul veszi, hogy a Nyerőszámok manuálisan kerülnek letöltésre, ami késedelmeket és pontatlanságokat okozhat. Az Nyerőszámok módosításra nem kerülnek, kizárólag elemzésre.
+
+3. Szavatosság kizárása:
+
+Az Alkalmazás „adott állapotban” (AS IS) és „rendelkezésre állás szerint” (AS AVAILABLE) érhető el. A Fejlesztő kifejezetten kizár mindenféle (kifejezett vagy vélelmezett) szavatosságot és felelősséget az Alkalmazás működésére, pontosságára, megbízhatóságára, hibamentességére, időszerűségére, teljességére, biztonságára vagy adott célra való alkalmasságára vonatkozóan.
+
+4. Hivatalos ellenőrzés kötelezettsége:
+
+Az Alkalmazás által mutatott eredmények (pl. találatok száma, elemzések) KIZÁRÓLAG TÁJÉKOZTATÓ JELLEGŰEK ÉS NEM HIVATALOSAK. Bármely feltételezett nyeremény érvényesítését a Felhasználó KÖTELES KIZÁRÓLAG a Szerencsejáték Zrt. hivatalos csatornáin elvégezni. Az Alkalmazásban megjelenített eredmények nem jogosítják fel a Felhasználót semmilyen nyeremény kifizetésére vagy igénylésére.
+
+5. Cél és rendeltetés:
+
+Az Alkalmazás kizárólag szórakoztatási célokat szolgál. Az itt található információk nem minősülnek szerencsejáték-tanácsadásnak. Az Alkalmazás NEM minősül szerencsejáték szolgáltatásnak. Az Alkalmazáson keresztül nem lehet sorsjegyet vásárolni, lottót feladni, fogadásokat kötni, téteket elhelyezni vagy nyereményt igényelni. Az Alkalmazás használata nem könnyíti meg a szerencsejátékban való részvételt, és nem célja a szerencsejátékban való részvétel népszerűsítése.
+
+6. Pénzügyi döntések kizárása:
+
+Az Alkalmazásban megjelenő információk NEM ALKALMASAK pénzügyi döntések alátámasztására. Ez magában foglalja, de nem kizárólagosan, a lottószelvények feladását vagy kidobását, illetve bármilyen nyereményigénylési folyamat megkezdését vagy elmulasztását. A Fejlesztő kifejezetten kizár minden felelősséget bármilyen pénzügyi veszteségért, elmaradt haszonért vagy kárért, amely az Alkalmazásban található információkra való hagyatkozásból ered.
+
+7. Korhatár:
+
+Az Alkalmazás kizárólag 18. (tizennyolcadik) életévüket betöltött személyek számára készült. A Feltételek elfogadásával Ön kijelenti és szavatolja, hogy betöltötte a 18. életévét.
+
+8. Segítségnyújtás:
+
+A túlzásba vitt szerencsejáték ártalmas lehet és függőség kialakulásához vezethet. Ha úgy érzi, hogy segítségre van szüksége, keresse fel a https://www.maradjonjatek.hu/ weboldalt vagy egy erre szakosodott segélyszervezetet.
+
+9. Szellemi tulajdon:
+
+A Szerencsejáték Zrt. által forgalmazott játékok nevei (pl. „Ötöslottó”, „Hatoslottó”, „Skandináv lottó”) a Szerencsejáték Zrt. bejegyzett védjegyei és szellemi tulajdonát képezik. Ezen elnevezések használata az Alkalmazásban kizárólag leíró, azonosító céllal történik, az Alkalmazás funkcióinak egyértelműsítése végett.
+
+10. A felelősség korlátozása:
+
+A törvény által megengedett legteljesebb mértékben a Fejlesztő semmilyen esetben sem felelős semmilyen közvetlen, közvetett, véletlen, különleges, következményes vagy büntető jellegű kárért (beleértve, de nem kizárólagosan az elmaradt hasznot), amely az Alkalmazás használatából vagy használatának képtelenségéből ered, még akkor sem, ha a Fejlesztőt tájékoztatták az ilyen károk lehetőségéről.
+
+11. A feltételek módosítása:
+
+A Fejlesztő fenntartja a jogot a jelen Feltételek bármikori, előzetes értesítés nélküli módosítására. A módosítások az Alkalmazásban való közzétételkor azonnal hatályba lépnek. Az Alkalmazás módosítás utáni további használatával Ön elfogadja a frissített Feltételeket.
+
+============================================================================
+
+II. Adatkezelési Tájékoztató
+
+Ez a Tájékoztató leírja, hogy Katona Mihály (mint Adatkezelő) és az általa igénybe vett adatfeldolgozók hogyan gyűjtik, használják, kezelik és védik az Ön személyes adatait az Alkalmazás használata során, összhangban az Általános Adatvédelmi Rendelettel (GDPR).
+
+a) Az Adatkezelő adatai
+
+Név: Katona Mihály
+
+Email cím: katona.mihaly@outlook.hu
+
+b) Az Adatfeldolgozó adatai Az Alkalmazás fenntartásához és működtetéséhez a Fejlesztő adatfeldolgozót vesz igénybe, aki a nevében technikai adatokat kezel.
+
+Név: Snowflake Inc. (a Streamlit platform szolgáltatója)
+
+Adatkezelési tájékoztató: https://streamlit.io/privacy-policy
+
+c) A kezelt személyes adatok köre
+
+Önkéntesen Megadott Adatok: Az Ön által a statisztikai elemzéshez és nyerőszám-ellenőrzéshez beküldött számsorok (továbbiakban "Szerencseszámok"). Ezeket az adatokat az Alkalmazás semmilyen módon nem tárolja el, azok kizárólag az összehasonlítási művelet idejére kerülnek felhasználásra a munkamenet során.
+
+Automatikusan Gyűjtött Technikai Adatok: Az Alkalmazás használata során az Adatfeldolgozó (Snowflake Inc./Streamlit) automatikusan naplózhat technikai adatokat a szolgáltatás biztosítása, hibakeresés és biztonsági elemzés céljából. Ezek jellemzően: az Ön IP-címe, a böngésző típusa és verziója, operációs rendszer, a látogatás időpontja. Az IP-cím a GDPR értelmében személyes adatnak minősül.
+
+d) Nemzetközi adattovábbítás Az Alkalmazás üzemeltetését a Snowflake Inc. (Streamlit) végzi, amelynek szerverei az Amerikai Egyesült Államokban (USA) és más, az Európai Gazdasági Térségen (EGT) kívüli országokban is elhelyezkedhetnek. Ebből adódóan az Ön Technikai Adatai (különösen az IP-címe) továbbításra kerülhetnek az EGT-n kívülre. Az Adatfeldolgozó megfelelő garanciákat (pl. Általános Adatvédelmi Kikötések - SCC, vagy az EU-USA Adatvédelmi Keretrendszer) alkalmaz ezen adattovábbítások jogszerűségének biztosítására.
+
+e) Adatkezelés időtartama
+
+Szerencseszámok: Nem kerülnek tárolásra.
+
+Technikai Adatok (pl. IP-cím): A biztonsági és hibakeresési célból gyűjtött szervernaplókat az Adatfeldolgozó (Snowflake Inc.) a saját adatkezelési tájékoztatójában meghatározott, a cél eléréséhez szükséges ideig őrzi meg.
+
+f) Az Önt megillető jogok Önt az alábbi jogok illetik meg a személyes adatai kezelésével kapcsolatban:
+
+Hozzáférési jog: Tájékoztatást kérhet az általunk kezelt személyes adatairól.
+
+Helyesbítéshez való jog: Kérheti adatainak javítását (ez leginkább az Adatfeldolgozónál tárolt technikai adatokra vonatkozhat).
+
+Törléshez való jog ("elfeledtetéshez való jog"): Kérheti adatainak törlését az Adatfeldolgozó lehetőségei szerint.
+
+Az adatkezelés korlátozásához való jog: Kérheti az adatkezelés korlátozását.
+
+Tiltakozáshoz való jog: Tiltakozhat személyes adatainak jogos érdeken alapuló kezelése ellen.
+
+Jogait az Adatkezelőnél, a fenti, a) pontban megadott e-mail címen gyakorolhatja. Az Adatkezelő továbbítja a kérést az Adatfeldolgozó felé, amennyiben az ott tárolt adatokat érinti.
+
+g) Panasztételi jog Ha úgy véli, hogy adatkezelésünk sérti a GDPR-t vagy más vonatkozó adatvédelmi jogszabályokat, jogában áll panaszt tenni a felügyeleti hatóságnál:
+
+Név: Nemzeti Adatvédelmi és Információszabadság Hatóság (NAIH)
+
+Cím: 1055 Budapest, Falk Miksa utca 9-11.
+
+Weboldal: http://www.naih.hu
+
+h) Kapcsolatfelvétel Amennyiben kérdése van a jelen Feltételekkel vagy az Adatkezelési Tájékoztatóval kapcsolatban, kérjük, vegye fel a kapcsolatot a Fejlesztővel az a) pontban megadott e-mail címen.
