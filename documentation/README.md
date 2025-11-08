@@ -1,3 +1,5 @@
+# THE APP IS UNDER DEVELOPMENT!
+
 # 🎯 Would have I won? App
 
 ### This Streamlit-based application allows users to check how many times a given set of "lucky numbers" would have resulted in a winning match (based on a user-defined match count) in Hungarian lotteries since the game began. It connects to a PostgreSQL database to query public historical draw data.
@@ -37,10 +39,14 @@ The project is structured into frontend, backend logic, configuration, and testi
 
 ### <span style="color: red;">IMPORTANT NOTICE: To comply with the strict gambling-related laws of Hungary a disclaimer was created. If you host the application yourself, then modify the documents in English and in Hungarian too. The developer (Mihály Katona) does not guarantee its completeness! See [LICENSE](../LICENSE)! <span>
 
-- Change the [disclaimer_en.txt](../disclaimer_en.txt):
-  - X
+- Change the [disclaimer_en.txt](../disclaimer_en.txt) everywhere:
+  - Katona Mihály --> To your own name.
+  - mihaly.katona@outlook.hu --> To your own email address.
+
+
 - Change the [disclaimer_hu.txt](../disclaimer_hu.txt)
-  - Y
+  - Katona Mihály --> To your own name.
+  - mihaly.katona@outlook.hu --> To your own email address.
 
 Follow these steps to get the 🎯 Would I have won? App running locally.
 
@@ -106,11 +112,13 @@ Execute the tests:
 ### <span style="color: red;">IMPORTANT NOTICE: To comply with the strict gambling-related laws of Hungary a disclaimer was created. If you host the application yourself, then modify the documents in English and in Hungarian too. The developer (Mihály Katona) does not guarantee its completeness! See [LICENSE](../LICENSE)! <span>
 
 - Change the [disclaimer_en.txt](../disclaimer_en.txt):
-  - X
+  - Katona Mihály --> To your own name.
+  - mihaly.katona@outlook.hu --> To your own email address.
 
 
 - Change the [disclaimer_hu.txt](../disclaimer_hu.txt)
-  - Y
+  - Katona Mihály --> To your own name.
+  - mihaly.katona@outlook.hu --> To your own email address.
 
 
 - Go to Streamlit Community Cloud: https://share.streamlit.io/

@@ -48,7 +48,7 @@ class StreamlitFrontend:
             "welcome_activity": "🎯 Tudd meg, hányszor nyertél volna a magyar lottón!",
             "welcome_goals": "🍀 Add meg a nyerőszámaid, és tudd meg, hányszor nyertél volna a lottón, ha a lottó"
                              " kezdete óta minden húzáson részt vettél volna!",
-            "disclaimer_title": "⚠️ Felhasználási feltételek",
+            "disclaimer_title": "⚠️ Felhasználási Feltételek és Adatkezelési Tájékoztató",
             "disclaimer_file": "disclaimer_hu.txt",
             "accept_button": "✅ Elfogadom",
             "back_button": "⬅️ Vissza",
