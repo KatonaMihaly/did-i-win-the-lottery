@@ -1,5 +1,3 @@
-# THE APP IS UNDER DEVELOPMENT! USER AGREEMENT AND PRIVACY POLICY ARE NOT READY! PLEASE, DO NOT USE!
-
 # 🎯 Would I have won? App
 
 ### This Streamlit-based application allows users to check how many times a given set of "lucky numbers" would have resulted in a winning match (based on a user-defined match count) in Hungarian lotteries since the game began. It connects to a PostgreSQL database to query public historical draw data.
