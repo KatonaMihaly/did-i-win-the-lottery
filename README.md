@@ -24,6 +24,90 @@ If this doesn’t solve the issue, contact the developer at:
 
 If the number of draws is not zero but the list is empty, it means your selected numbers have never matched in any draw up to the current database update.
 
+Some winning lucky numbers are the following, to check how the app should work. These will yield a non-empty list.
+- Ötöslottó: 1, 2, 3, 4, 5 / match count: 1
+- Hatoslottó: 1, 2, 3, 4, 5, 6 / match count: 1
+- Heteslottó: 1, 2, 3, 4, 5, 6, 7 / match count: 1
+
+## 🔔 Lottery rules
+
+## 5️⃣ Ötöslottó (5/90 Lottery)
+
+In the Ötöslottó game, you must choose **5 numbers out of 90**.
+The goal is to match as many as possible of the **5 winning numbers** drawn each week.
+Possible numbers of matches: **1, 2, 3, 4, or 5**.
+
+### Winning Odds
+
+| Matches | Odds |
+|----------|-------|
+| 5 matches | 1 : 43 949 268 |
+| 4 matches | 1 : 103 410 |
+| 3 matches | 1 : 1 231 |
+| 2 matches | 1 : 44 |
+
+> That means your chance of winning *any* prize in the Ötöslottó game is **1 : 43**.
+
+This description is an excerpt from the detailed rules available on the [Ötöslottó](https://bet.szerencsejatek.hu/jatekok/otoslotto/leiras) website.
+
+---
+
+## 6️⃣ Hatoslottó (6/45 Lottery)
+
+In the Hatoslottó game, you must choose **6 numbers out of 45**.
+The goal is to match as many as possible of the **6 winning numbers** drawn.
+Possible numbers of matches: **1, 2, 3, 4, 5, or 6**.
+
+### Winning Odds
+
+| Matches | Odds |
+|----------|-------|
+| 6 matches | 1 : 8 145 060 |
+| 5 matches | 1 : 34 808 |
+| 4 matches | 1 : 733 |
+| 3 matches | 1 : 45 |
+
+> That means your chance of winning *any* prize in the Hatoslottó game is **1 : 42**.
+
+This description is an excerpt from the detailed rules available on the [Hatoslottó](https://bet.szerencsejatek.hu/jatekok/hatoslotto/leiras) website.
+
+---
+
+## 7️⃣ Skandináv Lottó (7/35 Lottery)
+
+In the Skandináv Lottó game, you must choose **7 numbers out of 35**.
+Each week there are **two draws** – one manual and one mechanical – both drawing 7 numbers.
+Possible numbers of matches: **1, 2, 3, 4, 5, 6, or 7**.
+
+### Winning Odds
+
+| Matches | Odds |
+|----------|-------|
+| 7 matches | 1 : 3 362 260 |
+| 6 matches | 1 : 17 155 |
+| 5 matches | 1 : 424 |
+| 4 matches | 1 : 30 |
+
+> That means your chance of winning *any* prize in the Skandináv Lottó game is **1 : 28**.
+
+This description is an excerpt from the detailed rules available on the [Skandináv Lottó](https://bet.szerencsejatek.hu/jatekok/skandinavlotto/leiras) website.
+
+## 👀 Behind the scenes
+
+The app works as follows coded in [streamlit_app.py](streamlit_app.py). When a user selects the language then a _language state variable_ is registered.
+The app checks the _state variables list_ after every interaction. If the _language state variable_ is in the  _state variables list_
+then the User Agreement and Data Policy page pops up. The app continues only if the User Agreement and Data Policy is accepted, thus
+the _diclaimer state variable = True_ appears in the _state variables list_. If it is there, then the lottery picker page appears.
+There you can select the lottery, but if you are not sure, you can get help by pressing "Rules and guide" button.
+When the lottery is selected the _lottery_id state variable_ is set connected to the lottery and a grid of numbers appears.
+From the grid, you can select your lucky numbers. From another grid you can select for how many matches you want to filter for.
+It all depends on the  _lottery_id state variable_. If you press the "Submit" button then [backend.py](backend.py) is called which handles the 
+SQL query. An SQL query is sent to the database which check if any item matches the lucky numbers and provides a list containing those draws.
+The [backend.py](backend.py) then formats the list and send it back to [streamlit_app.py](streamlit_app.py), while the 
+_results state variable_ appears in the _state variables list_. If it is there the results are listed in the app. Enjoy the results!
+
+Anytime you can use the "Back" button to go one page back.
+
 ## 📁 Project Structure
 
 The project is structured into frontend, backend logic, configuration, and testing files:

@@ -33,7 +33,7 @@ Possible numbers of matches: **1, 2, 3, 4, or 5**.
 | 3 matches | 1 : 1 231 |
 | 2 matches | 1 : 44 |
 
-> That means your chance of winning *any* prize in the Ötöslottó game is **1 : 43**.
+That means your chance of winning *any* prize in the Ötöslottó game is **1 : 43**.
 
 This description is an excerpt from the detailed rules available on the [Ötöslottó](https://bet.szerencsejatek.hu/jatekok/otoslotto/leiras) website.
 
@@ -54,7 +54,7 @@ Possible numbers of matches: **1, 2, 3, 4, 5, or 6**.
 | 4 matches | 1 : 733 |
 | 3 matches | 1 : 45 |
 
-> That means your chance of winning *any* prize in the Hatoslottó game is **1 : 42**.
+That means your chance of winning *any* prize in the Hatoslottó game is **1 : 42**.
 
 This description is an excerpt from the detailed rules available on the [Hatoslottó](https://bet.szerencsejatek.hu/jatekok/hatoslotto/leiras) website.
 
@@ -75,6 +75,6 @@ Possible numbers of matches: **1, 2, 3, 4, 5, 6, or 7**.
 | 5 matches | 1 : 424 |
 | 4 matches | 1 : 30 |
 
-> That means your chance of winning *any* prize in the Skandináv Lottó game is **1 : 28**.
+That means your chance of winning *any* prize in the Skandináv Lottó game is **1 : 28**.
 
 This description is an excerpt from the detailed rules available on the [Skandináv Lottó](https://bet.szerencsejatek.hu/jatekok/skandinavlotto/leiras) website.
