@@ -1,8 +1,28 @@
 # 🎯 Would I have won? App
 
-### This Streamlit-based application allows users to check how many times a given set of "lucky numbers" would have resulted in a winning match (based on a user-defined match count) in Hungarian lotteries since the game began. It connects to a PostgreSQL database to query public historical draw data.
+### This Streamlit-based application allows users to check how many times a given set of "lucky numbers" would have resulted in a winning match (based on a user-defined match count) in Hungarian lotteries since the game began. It connects to a PostgreSQL database to query public historical draw data. The project is for entertainment and educational purposes only.
 
 ### 🤝 This project is a Capstone project for [NCLab Advanced Python Developer Training Program](https://nclab.com/pg-py/). I would like to thank the NCLab team for their guidance and assistance during the program. You are all awesome!
+
+## 🤖 User Guide
+
+![userguide.gif](userguide.gif)
+
+1) Choose your language.
+2) Accept the user agreement and data policy.
+3) Select the lottery or check rules and guide.
+4) Choose the match count.
+5) Choose your lucky numbers.
+6) Press the Submit button.
+7) Enjoy the results.
+
+If there are no listed results and the app displays
+*"You would have won in 0 draws out of 0 draws since the start of the lottery!"*,
+then an error occurred during data retrieval. Please refresh the application.
+If this doesn’t solve the issue, contact the developer at:
+📧 **katona.mihaly@outlook.hu**
+
+If the number of draws is not zero but the list is empty, it means your selected numbers have never matched in any draw up to the current database update.
 
 ## 📁 Project Structure
 

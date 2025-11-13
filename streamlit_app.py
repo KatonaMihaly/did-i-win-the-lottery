@@ -23,6 +23,8 @@ class StreamlitFrontend:
             "accept_button": "✅ I Accept",
             "back_button": "⬅️ Back",
             "selector_title": "Choose the type of lottery!",
+            "rules_title": "📜 Rules and guide",
+            "rules_file": "rules_en.txt",
             "selector_matches": "🎯 Pick the number of matches.",
             "picker_title_hu5": "🎲 Pick your 5 lottery numbers.",
             "picker_title_hu6": "🎲 Pick your 6 lottery numbers.",
@@ -54,6 +56,8 @@ class StreamlitFrontend:
             "back_button": "⬅️ Vissza",
             "selector_title": "🎰 Válaszd ki a lottó típusát!",
             "selector_matches": "🎯 Válaszd ki a találatok számát!",
+            "rules_title": "📜 Szabályok és útmutató",
+            "rules_file": "rules_hu.txt",
             "picker_title_hu5": "🎲 Add meg az 5 nyerőszámod!",
             "picker_title_hu6": "🎲 Add meg a 6 nyerőszámod!",
             "picker_title_hu7": "🎲 Add meg a 7 nyerőszámod!",
@@ -129,16 +133,19 @@ class StreamlitFrontend:
             if st.button("Magyar", use_container_width=True, type="secondary"):
                 st.session_state["language"] = "hu"
                 st.rerun()
+            st.image("hu.png", use_container_width=True)
+
         with col2:
             if st.button("English", use_container_width=True, type="secondary"):
                 st.session_state["language"] = "en"
                 st.rerun()
+            st.image("en.png", use_container_width=True)
 
-        col1, col2 = st.columns(2)
-        with col1:
-            st.title(self.TEXT["hu"]["welcome_goals"])
-        with col2:
-            st.title(self.TEXT["en"]["welcome_goals"])
+        # col1, col2 = st.columns(2)
+        # with col1:
+        #     st.title(self.TEXT["hu"]["welcome_goals"])
+        # with col2:
+        #     st.title(self.TEXT["en"]["welcome_goals"])
 
     def _disclaimer_page(self, txt):
         """
@@ -183,14 +190,6 @@ class StreamlitFrontend:
                 st.session_state["lottery_id"] = "hu5"
                 st.rerun()
 
-            # Back button resets the disclaimer and all lottery-related states
-            back_keys = [
-                "disclaimer_accepted", "lottery_id",
-                "selected_numbers_hu5", "selected_numbers_hu6", "selected_numbers_hu7",
-                "get_winning_numbers"
-            ]
-            st.button(txt["back_button"], on_click=self._clear_session_keys, args=(back_keys,))
-
         with col2:
             if st.button("Hatoslottó", use_container_width=True, type=get_button_type("hu6")):
                 st.session_state["lottery_id"] = "hu6"
@@ -200,6 +199,42 @@ class StreamlitFrontend:
             if st.button("Skandináv lottó", use_container_width=True, type=get_button_type("hu7")):
                 st.session_state["lottery_id"] = "hu7"
                 st.rerun()
+
+        col4, col5 = st.columns([1, 2])
+
+        with col4:
+            # Back button resets the disclaimer and all lottery-related states
+            back_keys = [
+                "disclaimer_accepted", "lottery_id",
+                "selected_numbers_hu5", "selected_numbers_hu6", "selected_numbers_hu7",
+                "get_winning_numbers",
+            ]
+            st.button(txt["back_button"], on_click=self._clear_session_keys, use_container_width=True, args=(back_keys,))
+
+        with col5:
+            if st.button(txt["rules_title"], use_container_width=True, type=get_button_type("rules")):
+                st.session_state["rules"] = True
+                st.rerun()
+
+    def rules_page(self, txt):
+        st.set_page_config(page_title='Would have I won?', page_icon="🎲", layout="centered")
+        st.title(txt["rules_title"])
+
+        # Back button resets the disclaimer and all lottery-related states
+        back_keys = [
+            "lottery_id", 'rules'
+        ]
+        st.button(txt["back_button"], on_click=self._clear_session_keys, args=(back_keys,))
+
+        # Sanity check: Try to read the disclaimer file.
+        try:
+            with open(txt["rules_file"], 'r', encoding='utf-8') as file:
+                st.write(file.read())
+        except FileNotFoundError:
+            st.error(f"Error: Rules file not found at '{os.path.abspath(txt['rules_file'])}'.")
+            # Still show buttons so user can go back.
+        except Exception as e:
+            st.error(f"An error occurred while reading the file: {e}")
 
     def _number_picker_page(self, _lottery_id, txt):
         """
@@ -395,6 +430,9 @@ class StreamlitFrontend:
         elif page == 'selector':
             return self._lottery_type_page(txt)
 
+        elif page == 'rules':
+            return self.rules_page(txt)
+
         elif page == 'picker':
             return self._number_picker_page(lottery_id, txt)
 
@@ -429,16 +467,25 @@ def run_app():
     #  Page 3: Lottery Selector 
     if ("language" in st.session_state and
             st.session_state.get("disclaimer_accepted", True) and
-            "get_winning_numbers" not in st.session_state
+            "get_winning_numbers" not in st.session_state and
+            "rules" not in st.session_state
     ):
         frontend.call_pages('selector', txt=txt)
+
+    # Subpage 1: Rules
+    if ("language" in st.session_state and
+            st.session_state.get("disclaimer_accepted", True) and
+            "rules" in st.session_state
+    ):
+        frontend.call_pages('rules', txt=txt)
 
     #  Page 4: Number Picker 
     # Check this *before* the lottery selector.
     if ("language" in st.session_state and
             st.session_state.get("disclaimer_accepted", True) and
             "lottery_id" in st.session_state and
-            "get_winning_numbers" not in st.session_state
+            "get_winning_numbers" not in st.session_state and
+            "rules" not in st.session_state
     ):
         frontend.call_pages('picker', lottery_id=st.session_state["lottery_id"], txt=txt)
 

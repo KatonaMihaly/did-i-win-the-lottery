@@ -1,0 +1,75 @@
+Az alkalmazás használatához először válaszd ki a **lottót** (szabályok alább), majd azt, hogy **hány találatra** szeretnél szűrni (a lottótól függően).
+Ezután add meg a **nyerőszámaidat**. Legfeljebb annyi számot választhatsz ki, amennyit a lottó enged.
+Ha újra kattintasz egy számra, a kiválasztás megszűnik.
+Végül nyomd meg a **„Lássuk”** gombot, hogy az alkalmazás kilistázza a historikus adatokat.
+
+Ha nem jelennek meg eredmények, és az applikáció ezt írja:
+*"Az eddigi *0* húzásból *0* húzáson lett volna találatod!"*,
+akkor hiba történt a lekérés során. Frissítsd az alkalmazást.
+Ha ez sem oldja meg a problémát, vedd fel a kapcsolatot a fejlesztővel:
+📧 **katona.mihaly@outlook.hu**
+
+Ha a húzások száma nem nulla, de a lista üres, akkor a megadott számsor eddig **soha nem ért el találatot** az adatbázis frissítéséig.
+
+---
+
+## 5️⃣ Ötöslottó (5/90)
+
+Az **Ötöslottó** játékban **90 számból kell 5-öt kiválasztani**.
+A cél, hogy minél többet eltalálj a **hetente sorsolt 5 nyerőszám** közül.
+Lehetséges találatok száma: **1, 2, 3, 4 vagy 5**.
+
+### Nyerési esélyek
+
+| Találat | Esély |
+|----------|--------|
+| 5 találat | 1 : 43 949 268 |
+| 4 találat | 1 : 103 410 |
+| 3 találat | 1 : 1 231 |
+| 2 találat | 1 : 44 |
+
+> Vagyis **1 : 43** annak az esélye, hogy az Ötöslottó játékban valamilyen nyereményt érsz el.
+
+A jelen leírás a részletes szabályzat kivonata, amely a [**Ötöslottó**](https://bet.szerencsejatek.hu/jatekok/otoslotto/leiras) weboldalon érhető el.
+
+---
+
+## 6️⃣ Hatoslottó (6/45)
+
+A **Hatoslottó** játékban **45 számból kell 6-ot kiválasztani**.
+A cél, hogy minél többet eltalálj a **kisorsolt 6 nyerőszám** közül.
+Lehetséges találatok száma: **1, 2, 3, 4, 5 vagy 6**.
+
+### Nyerési esélyek
+
+| Találat | Esély |
+|----------|--------|
+| 6 találat | 1 : 8 145 060 |
+| 5 találat | 1 : 34 808 |
+| 4 találat | 1 : 733 |
+| 3 találat | 1 : 45 |
+
+> Vagyis **1 : 42** annak az esélye, hogy a Hatoslottó játékban valamilyen nyereményt érsz el.
+
+A jelen leírás a részletes szabályzat kivonata, amely a [**Hatoslottó**](https://bet.szerencsejatek.hu/jatekok/hatoslotto/leiras) weboldalon érhető el.
+
+---
+
+## 7️⃣ Skandináv Lottó (7/35)
+
+A **Skandináv Lottó** játékban **35 számból kell 7-et kiválasztani**.
+A számok hetente **egy kézi és egy gépi sorsoláson** vesznek részt, mindkettőn **7-7 számot húznak ki**.
+Lehetséges találatok száma: **1, 2, 3, 4, 5, 6 vagy 7**.
+
+### Nyerési esélyek
+
+| Találat | Esély |
+|----------|--------|
+| 7 találat | 1 : 3 362 260 |
+| 6 találat | 1 : 17 155 |
+| 5 találat | 1 : 424 |
+| 4 találat | 1 : 30 |
+
+> Vagyis **1 : 28** annak az esélye, hogy a Skandináv Lottó játékban valamilyen nyereményt érsz el.
+
+A jelen leírás a részletes szabályzat kivonata, amely a [**Skandináv Lottó**](https://bet.szerencsejatek.hu/jatekok/skandinavlotto/leiras) weboldalon érhető el.
