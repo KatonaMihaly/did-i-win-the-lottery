@@ -11,6 +11,11 @@ If this doesn’t solve the issue, contact the developer at:
 
 If the number of draws is not zero but the list is empty, it means your selected numbers have never matched in any draw up to the current database update.
 
+Some winning lucky numbers are the following, to check how the app should work. These will yield a non-empty list.
+- Ötöslottó: 1,2,3,4,5 / match count: 1
+- Hatoslottó: 1,2,3,4,5,6 / match count: 1
+- Heteslottó: 1,2,3,4,5,6,7 / match count: 1
+
 ---
 
 ## 5️⃣ Ötöslottó (5/90 Lottery)

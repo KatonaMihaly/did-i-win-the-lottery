@@ -11,6 +11,11 @@ Ha ez sem oldja meg a problémát, vedd fel a kapcsolatot a fejlesztővel:
 
 Ha a húzások száma nem nulla, de a lista üres, akkor a megadott számsor eddig **soha nem ért el találatot** az adatbázis frissítéséig.
 
+Az alkalmazás működésének ellenőrzéséhez az alábbi nyerőszámok egy nem üres listát eredményeznek.
+- Ötöslottó: 1,2,3,4,5 / találatok száma: 1
+- Hatoslottó: 1,2,3,4,5,6 / találatok száma: 1
+- Heteslottó: 1,2,3,4,5,6,7 / találatok száma: 1
+
 ---
 
 ## 5️⃣ Ötöslottó (5/90)
